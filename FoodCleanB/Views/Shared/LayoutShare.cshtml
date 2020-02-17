@@ -1,4 +1,10 @@
-﻿<html>
+﻿@using FoodCleanB.Database
+
+@{
+    TAI_KHOAN user = Session["User"] as TAI_KHOAN;
+}
+
+<html>
 <head>
     <meta charset="utf-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
@@ -27,8 +33,7 @@
     <link rel="stylesheet" href="~/css/custom.css">
 </head>
 <body>
-   @Html.ActionLink("Thoat","LogOut","Login" )
-    
+
     <!-- Start Main Top -->
     <header class="main-header">
         <!-- Start Navigation -->
@@ -50,7 +55,7 @@
                         <li class="dropdown">
                             <a href="#" class="nav-link dropdown-toggle arrow" data-toggle="dropdown">Cửa hàng</a>
                             <ul class="dropdown-menu">
-                                <li><a href="@Url.Action("Insert","Order")">Tạo đơn hàng</a></li>
+                                <li><a href="@Url.Action("Insert", "Order")">Tạo đơn hàng</a></li>
                                 <li><a href="cart.html">Cart</a></li>
                                 <li><a href="checkout.html">Checkout</a></li>
                                 <li><a href="my-account.html">My Account</a></li>
@@ -66,12 +71,25 @@
                 <div class="attr-nav">
                     <ul>
                         <li class="search"><a href="#"><i class="fa fa-search"></i></a></li>
-                        <li class="side-menu">
-                            <a href="#">
-                                <i class="fa fa-shopping-bag"></i>
-                                <span class="badge">3</span>
-                                <p>Giỏ hàng của tôi</p>
-                            </a>
+                        @if (user != null)
+                        {
+                            <li class="side-menu">
+                                <a href="#">
+                                    <i class="fa fa-shopping-bag"></i>
+                                    <a href="@Url.Action("List", "Order")">Giỏ hàng của banj, @user.TenDangNhap</a>
+                                </a>
+                            </li>
+                        }
+                        <li class="user">
+                            @if (user != null)
+                            {
+                                @Html.ActionLink("Thoat", "LogOut", "Login")
+
+                            }
+                            else
+                            {
+                                @Html.ActionLink("Dang Nhap", "Login", "Login")
+                            }
                         </li>
                     </ul>
                 </div>

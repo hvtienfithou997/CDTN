@@ -5,6 +5,7 @@ using System.Security.Claims;
 using System.Web;
 using System.Web.Mvc;
 using FoodCleanB.Database;
+using FoodCleanB.Helpers;
 using FoodCleanB.Models;
 
 namespace FoodCleanB.Controllers
@@ -19,8 +20,16 @@ namespace FoodCleanB.Controllers
         [Route("dangnhap")]
         public ActionResult Login()
         {
+            // Da login tu truoc
+            if (Session["User"] != null)
+            {
+                RedirectToAction("Index", "Home");
+            }
+
+            Request.Cookies.Clear();
             return View();
         }
+
         [HttpPost]
         [Route("dangnhap")]
         public ActionResult Login(LoginModel log)
@@ -32,10 +41,11 @@ namespace FoodCleanB.Controllers
                 HttpCookie myCookie = new HttpCookie("MyFoodFreshCookie");
                 DateTime now = DateTime.Now;
 
-                // Set the cookie value.
-                myCookie.Value = user.MaTaiKhoan;
+                // ma hoa theo danh Base64 va luu trong cookie
+                myCookie.Value = EncryptHelper.Base64Encode(user.MaTaiKhoan);
+
                 // Set the cookie expiration date.
-                myCookie.Expires = now.AddHours(2);
+                myCookie.Expires = now.AddDays(30);
 
                 // Add the cookie.
                 Response.Cookies.Add(myCookie);

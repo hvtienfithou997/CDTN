@@ -6,7 +6,6 @@ using System.Web.Mvc;
 
 namespace FoodCleanB.Controllers
 {
-    [Login]
     public class HomeController : Controller
     {
         public ActionResult Index()
