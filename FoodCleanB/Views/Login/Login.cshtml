@@ -26,12 +26,12 @@
             <!-- Login Form -->
             @using (Html.BeginForm("Login", "Login", FormMethod.Post))
             {
+                @Html.AntiForgeryToken()
                 <input type="text" id="login" class="fadeIn second" name="TenDangNhap" placeholder="Tài khoản" required>
-                <input type="text" id="password" class="fadeIn third" name="MatKhau" placeholder="Mật khẩu" required>
+                <input type="password" id="password" class="fadeIn third" name="MatKhau" placeholder="Mật khẩu" required>
                 <input type="submit" class="fadeIn fourth" value="Đăng nhập">
             }
 
-            
             <div id="formFooter">
                 <a class="underlineHover" href="#">Chuyên đề tốt nghiệp</a>
             </div>

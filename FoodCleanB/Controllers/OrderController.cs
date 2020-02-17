@@ -1,41 +1,41 @@
-﻿using System.Collections.Generic;
-using System.Web.Mvc;
-using FoodCleanB.Database;
+﻿using FoodCleanB.Database;
 using FoodCleanB.Helpers;
 using FoodCleanB.Models;
+using System.Linq;
+using System.Web.Mvc;
 
 namespace FoodCleanB.Controllers
 {
     [Login]
-    public class OrderController : Controller
+    public class OrderController : BaseController
     {
         [Route("them/{itemId}")]
         public ActionResult Insert(int itemId)
         {
-            TAI_KHOAN user = (TAI_KHOAN) Session["User"];
+            TAI_KHOAN user = (TAI_KHOAN)Session["User"];
 
-            var cartKey = $"UserCart_{user.MaTaiKhoan}";
-            
-            // Lay danh sach item  da co gio hang trong session
-            var danhSachGioHang = Session[cartKey] as List<UserCartItemModel> ?? new List<UserCartItemModel>();
+            // Sản phẩm đã có trong giỏ hàng
+            var existed = Db.SanPhamGioHang.SingleOrDefault(b => b.MaTaiKhoan == user.MaTaiKhoan && b.ItemId == itemId);
 
-            var  existed = danhSachGioHang.Find(o => o.ItemId == itemId);
-
+            // Tăng số lượng của sản phẩm đã có
             if (existed != null)
             {
                 existed.SoLuong++;
             }
             else
             {
+                // Thêm mới sản phẩm
                 var newItem = new UserCartItemModel
                 {
-                    ItemId = itemId
+                    ItemId = itemId,
+                    MaTaiKhoan = user.MaTaiKhoan
                 };
-                danhSachGioHang.Add(newItem);
+
+                Db.SanPhamGioHang.Add(newItem);
             }
 
-            // Luu lai 
-            Session[cartKey] = danhSachGioHang;
+            // Luu lai
+            Db.SaveChanges();
 
             return RedirectToAction("List");
         }
@@ -44,18 +44,16 @@ namespace FoodCleanB.Controllers
         [HttpGet]
         public ActionResult List()
         {
-            TAI_KHOAN user = (TAI_KHOAN) Session["User"];
+            TAI_KHOAN user = (TAI_KHOAN)Session["User"];
 
             // Lay thong tin gio hang day tu session
-            var cartKey = $"UserCart_{user.MaTaiKhoan}";
 
             // Lay danh sach item  da co gio hang trong session
-            var danhSachGioHang = Session[cartKey] as List<UserCartItemModel>;
+            var danhSachGioHang = Db.SanPhamGioHang.Where(b => b.MaTaiKhoan == user.MaTaiKhoan).ToList();
 
-            // Join voi bang Hang de lay ten hang
+            // Join voi bang Hang de lay ten sản phẩm
             if (danhSachGioHang != null)
             {
-
             }
 
             return View();

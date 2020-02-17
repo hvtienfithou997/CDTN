@@ -1,23 +1,18 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Security.Claims;
-using System.Web;
-using System.Web.Mvc;
-using FoodCleanB.Database;
+﻿using FoodCleanB.Database;
 using FoodCleanB.Helpers;
 using FoodCleanB.Models;
+using System;
+using System.Linq;
+using System.Web;
+using System.Web.Mvc;
 
 namespace FoodCleanB.Controllers
 {
-    public class LoginController : Controller
+    public class LoginController : BaseController
     {
         // GET: Login
-
-        CDLTEntities db = new CDLTEntities();
-
         [HttpGet]
-        [Route("dangnhap")]
+        [Route("dang-nhap")]
         public ActionResult Login()
         {
             // Da login tu truoc
@@ -31,11 +26,20 @@ namespace FoodCleanB.Controllers
         }
 
         [HttpPost]
-        [Route("dangnhap")]
+        [Route("dang-nhap")]
+        [ValidateAntiForgeryToken]
         public ActionResult Login(LoginModel log)
         {
-            var user = (db.TAI_KHOAN.Where(x => x.TenDangNhap == log.TenDangNhap && x.MatKhau == log.MatKhau)).FirstOrDefault();
-           
+            if (!ModelState.IsValid)
+            {
+                return View(log);
+            }
+
+            // Mã hóa mật khẩu
+            var hashedPass = EncryptHelper.GenerateSHA256String(log.MatKhau);
+
+            var user = Db.TAI_KHOAN.FirstOrDefault(x => x.TenDangNhap == log.TenDangNhap && x.MatKhau == hashedPass);
+
             if (user != null)
             {
                 HttpCookie myCookie = new HttpCookie("MyFoodFreshCookie");
@@ -49,18 +53,88 @@ namespace FoodCleanB.Controllers
 
                 // Add the cookie.
                 Response.Cookies.Add(myCookie);
-                return RedirectToAction("Index","Home");
+                return RedirectToAction("Index", "Home");
             }
-            
 
             return View();
-
         }
+
+        [HttpGet]
+        [Route("dang-ky")]
+        public ActionResult DangKy()
+        {
+            // Da login tu truoc
+            if (Session["User"] != null)
+            {
+                RedirectToAction("Index", "Home");
+            }
+
+            return View();
+        }
+
+        [HttpPost]
+        [Route("dang-ky")]
+        [ValidateAntiForgeryToken]
+        public ActionResult DangKy(RegisterModel m)
+        {
+            if (!ModelState.IsValid)
+            {
+                return View(m);
+            }
+
+            // Mật khẩu không trùng nhau
+            if (m.MatKhau != m.XacNhanMatKhau)
+            {
+                ModelState.AddModelError("MatKhau", "Mật khẩu không trùng nhau");
+                return View(m);
+            }
+
+            var user = Db.TAI_KHOAN.FirstOrDefault(x => x.TenDangNhap == m.TenDangNhap);
+
+            // Tên đăng nhập đã được dùng
+            if (user != null)
+            {
+                ModelState.AddModelError("TenDangNhap", "Tên đăng nhập đã được sử dụng");
+                return View(m);
+            }
+
+            user = Db.TAI_KHOAN.FirstOrDefault(x => x.Email == m.Email);
+
+            // Email đã được dùng
+            if (user != null)
+            {
+                ModelState.AddModelError("TenDangNhap", "Email đã được sử dụng");
+                return View(m);
+            }
+
+            // Mã hóa mật khẩu trước khi lưu
+            var hashedPass = EncryptHelper.GenerateSHA256String(m.MatKhau);
+
+            var newUser = new TAI_KHOAN { MatKhau = hashedPass, TenDangNhap = m.TenDangNhap, Email = m.Email };
+            Db.TAI_KHOAN.Add(newUser);
+            Db.SaveChangesAsync();
+
+            return RedirectToAction("Login");
+        }
+
         [Route("dangxuat")]
         public ActionResult LogOut()
         {
             Request.Cookies.Clear();
-            return RedirectToAction("Login","Login");
+            return RedirectToAction("Login", "Login");
+        }
+
+        [HttpGet]
+        [Route("khoi-phuc")]
+        public ActionResult ResetPass()
+        {
+            // Da login tu truoc
+            if (Session["User"] != null)
+            {
+                RedirectToAction("Index", "Home");
+            }
+
+            return View();
         }
     }
 }

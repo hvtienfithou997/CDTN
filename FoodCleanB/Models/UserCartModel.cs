@@ -5,5 +5,7 @@
         public int ItemId { get; set; }
 
         public int SoLuong { get; set; } = 1;
+
+        public string MaTaiKhoan { get; set; }
     }
 }
