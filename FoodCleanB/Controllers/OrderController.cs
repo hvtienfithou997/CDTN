@@ -9,9 +9,18 @@ namespace FoodCleanB.Controllers
     [Login]
     public class OrderController : BaseController
     {
-        [Route("them/{itemId}")]
+        [Route("them-vao-gio-hang/{itemId}")]
+        [HttpGet]
         public ActionResult Insert(int itemId)
         {
+            var outOfStock = Db.SanPhams.FirstOrDefault(o => o.MaHang == itemId);
+
+            // Het hang
+            if (outOfStock == null || outOfStock.SoLuong == 0)
+            {
+                return Json(new { Code = 0, Message = "Hết hàng" }, JsonRequestBehavior.AllowGet);
+            }
+
             TaiKhoan user = (TaiKhoan)Session["User"];
 
             // Sản phẩm đã có trong giỏ hàng
@@ -37,7 +46,7 @@ namespace FoodCleanB.Controllers
             // Luu lai
             Db.SaveChanges();
 
-            return RedirectToAction("List");
+            return Json(new {  Code = 1, Message = "Thêm thành công" }, JsonRequestBehavior.AllowGet);
         }
 
         [Route("gio-hang")]
@@ -49,14 +58,27 @@ namespace FoodCleanB.Controllers
             // Lay thong tin gio hang day tu session
 
             // Lay danh sach item  da co gio hang trong session
-            var danhSachGioHang = Db.SanPhamGioHangs.Where(b => b.MaTaiKhoan == user.MaTaiKhoan).ToList();
-
             // Join voi bang Hang de lay ten sản phẩm
-            if (danhSachGioHang != null)
-            {
-            }
+            var danhSachGioHang = Db.SanPhamGioHangs.Where(b => b.MaTaiKhoan == user.MaTaiKhoan)
+                .Join(Db.SanPhams,
+                    cart => cart.MaHang,
+                    s => s.MaHang,
+                    (cart, s) => new UserCartItemModel
+                    {
+                        ItemId = s.MaHang,
+                        SoLuong = cart.SoLuong,
+                        AnhSanPham = s.AnhSanPham,
+                        TenHang = s.TenHang,
+                        GiaThanh = s.GiaThanh,
+                        MaNhaCungCap = s.MaNhaCungCap
+                    });
 
-            return View();
+            return View(danhSachGioHang);
+        }
+
+        public ActionResult Delete(int id)
+        {
+            throw new System.NotImplementedException();
         }
     }
 }

@@ -1,67 +1,67 @@
-﻿@model IEnumerable<FoodCleanB.Database.HANG>
+﻿@model IEnumerable<FoodCleanB.Models.UserCartItemModel>
 
 @{
-    ViewBag.Title = "Gio hang";
+    ViewBag.Title = "Giỏ hàng";
     Layout = "~/Views/Shared/LayoutShare.cshtml";
 }
 
-<h2>Gio hang</h2>
+<div class="pt-3 pb-3">
+    <h2 class="text-center font-weight-bold">Giỏ hàng</h2>
 
-<table class="table">
-    <tr>
-        <th>
-            @Html.DisplayNameFor(model => model.MaHang)
-        </th>
-        <th>
-            @Html.DisplayNameFor(model => model.MaNCC)
-        </th>
-        <th>
-            @Html.DisplayNameFor(model => model.MaNhomHang)
-        </th>
-        <th>
-            @Html.DisplayNameFor(model => model.TenHang)
-        </th>
-        <th>
-            @Html.DisplayNameFor(model => model.MoTa)
-        </th>
-        <th>
-            @Html.DisplayNameFor(model => model.DonGia)
-        </th>
-        <th>
-            @Html.DisplayNameFor(model => model.SoLuong)
-        </th>
-        <th></th>
-    </tr>
+    @if (!Model.Any())
+    {
+        <h3 class="text-center">
+            Chưa có sản phẩm trong giỏ hàng của bạn.
+        </h3>
+    }
+    else
+    {
+        <div class="total">
+            Số lượng: @Model.Count()
+        </div>
 
-@foreach (var item in Model) {
-    <tr>
-        <td>
-            @Html.DisplayFor(modelItem => item.MaHang)
-        </td>
-        <td>
-            @Html.DisplayFor(modelItem => item.MaNCC)
-        </td>
-        <td>
-            @Html.DisplayFor(modelItem => item.MaNhomHang)
-        </td>
-        <td>
-            @Html.DisplayFor(modelItem => item.TenHang)
-        </td>
-        <td>
-            @Html.DisplayFor(modelItem => item.MoTa)
-        </td>
-        <td>
-            @Html.DisplayFor(modelItem => item.DonGia)
-        </td>
-        <td>
-            @Html.DisplayFor(modelItem => item.SoLuong)
-        </td>
-        <td>
-            @Html.ActionLink("Edit", "Edit", new { /* id=item.PrimaryKey */ }) |
-            @Html.ActionLink("Details", "Details", new { /* id=item.PrimaryKey */ }) |
-            @Html.ActionLink("Delete", "Delete", new { /* id=item.PrimaryKey */ })
-        </td>
-    </tr>
-}
+        <table class="table">
+            <tr>
+                <th>
+                </th>
+                <th>
+                    Ten Hang
+                </th>
+                <th>
+                    @Html.DisplayNameFor(model => model.SoLuong)
+                </th>
+                <th>
+                    @Html.DisplayNameFor(model => model.GiaThanh)
+                </th>
+                @*<th>
+                        @Html.DisplayNameFor(model => model.MaNhaCungCap)
+                    </th>*@
+                <th></th>
+            </tr>
 
-</table>
+            @foreach (var item in Model)
+            {
+                <tr>
+                    <td>
+                        <a href="@Url.Action("Detail", "SanPham", new { ItemId = item.ItemId })" title="Xem"><img src="@item.AnhSanPham" alt="@item.TenHang" /></a>
+                    </td>
+                    <td>
+                        <a href="@Url.Action("Detail", "SanPham", new { ItemId = item.ItemId })" title="Xem">@item.TenHang</a>
+                    </td>
+                    <td>
+                        @item.SoLuong
+                    </td>
+                    <td>
+                        @item.GiaThanh ₫
+                    </td>
+                    @*<td>
+                            @Html.DisplayFor(modelItem => item.MaNhaCungCap)
+                        </td>*@
+                    <td>
+                        @Html.ActionLink("Xóa", "Delete", new { ItemId = item.ItemId })
+                    </td>
+                </tr>
+            }
+        </table>
+    }
+</div>
