@@ -185,6 +185,7 @@ namespace FoodCleanB.Controllers
         {
             // Tìm sản phẩm
             SanPham existed = Db.SanPhams.FirstOrDefault(o => o.MaHang == maHang);
+
             if (existed == null)
             {
                 TempData["Message"] = $"Không có sản phẩm với mã số {maHang}";
@@ -192,6 +193,11 @@ namespace FoodCleanB.Controllers
                 return RedirectToAction("SanPham");
             }
 
+            var card = Db.SanPhamGioHangs.Where(o => o.MaHang == existed.MaHang);
+            foreach (var sp in card)
+            {
+                Db.SanPhamGioHangs.Remove(sp);
+            }
             Db.SanPhams.Remove(existed);
             Db.SaveChanges();
 

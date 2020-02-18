@@ -925,6 +925,7 @@
      margin: 0 auto;
      text-align: center;
      display: block;
+     max-height:250px;
 }
  .type-lb{
      position: absolute;

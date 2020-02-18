@@ -14,10 +14,14 @@ else
             <div class="products-single fix">
                 <div class="box-img-hover">
                     <div class="type-lb">
-                        <p class="sale">@item.TenHang</p>
+                        @if (item.KhuyenMai > 0)
+                        {
+                            <p class="sale">@item.KhuyenMai đ</p>
+                        }
+
                     </div>
                     <div class="image-box">
-                        <img src="@item.AnhSanPham" class="img-fluid" alt="Image">
+                        <img src="@item.AnhSanPham" class="img-fluid img-responsive img-thumbnail" alt="Image">
                     </div>
                     
                     <div class="mask-icon">
@@ -29,12 +33,14 @@ else
                             </li>
                             <li><a href="#" data-toggle="tooltip" data-placement="right" title="Lưu lại"><i class="far fa-heart"></i></a></li>
                         </ul>
+
                         <a class="cart add-card" href="#" data-itemid="@item.MaHang">Thêm vào giỏ</a>
                     </div>
                 </div>
                 <div class="why-text">
-                    <h4>Rau củ</h4>
-                    <h5>@item.GiaThanh đ</h5>
+                    <h4><a href="@Url.Action("Detail", new {ItemId = item.MaHang, Title = item.TenHang.Replace(" ", "-")})" title="View">@item.TenHang</a></h4>
+
+                    <h5 class="price">@String.Format(item.GiaThanh.ToString("##,###")) đ</h5>
                 </div>
             </div>
         </div>

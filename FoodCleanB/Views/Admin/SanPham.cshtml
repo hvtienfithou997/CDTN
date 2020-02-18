@@ -74,19 +74,25 @@
                 @Html.DisplayFor(modelItem => item.MoTa)
             </td>
             <td>
-                @Html.DisplayFor(modelItem => item.GiaThanh) đ
+                @item.GiaThanh.ToString("##,###") đ
             </td>
             <td>
                 @Html.DisplayFor(modelItem => item.SoLuong)
             </td>
             <td>
-                @Html.DisplayFor(modelItem => item.KhoiLuong)
+                @if (item.KhoiLuong != null)
+                {
+                    item.KhoiLuong = item.KhoiLuong * 1000;
+                    @Html.Raw(item.KhoiLuong + "g")
+                }
+                
+
             </td>
             <td>
                 @Html.DisplayFor(modelItem => item.TheTich)
             </td>
             <td>
-                @Html.DisplayFor(modelItem => item.KhuyenMai) đ
+                @(item.KhuyenMai != null ? item.KhuyenMai.GetValueOrDefault().ToString("##,###") : "0") đ
             </td>
             <td>
                 <img src="@item.AnhSanPham" alt="ảnh" style="max-width: 150px; height: auto;" />

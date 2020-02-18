@@ -2,7 +2,7 @@
 using System.Linq;
 using System.Web.Mvc;
 using FoodCleanB.Database;
-
+using System.Globalization;
 namespace FoodCleanB.Controllers
 {
     public class SanPhamController : BaseController
@@ -23,9 +23,9 @@ namespace FoodCleanB.Controllers
             return PartialView(list);
         }
 
-        [Route("san-pham/{itemId}-{title}")]
+        [Route("san-pham/{title}-{itemId}")]
         [HttpGet]
-        public ActionResult Detail(int itemId)
+        public ActionResult Detail(int itemId, string title)
         {
             var sanPham = Db.SanPhams.FirstOrDefault(o => o.MaHang == itemId);
 

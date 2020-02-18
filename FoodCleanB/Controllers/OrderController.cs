@@ -13,7 +13,10 @@ namespace FoodCleanB.Controllers
         [ChildActionOnly]
         public PartialViewResult CartCount()
         {
-            ViewBag.CartCount = Db.SanPhamGioHangs.Count();
+            TaiKhoan user = (TaiKhoan)Session["User"];
+
+            ViewBag.CartCount = Db.SanPhamGioHangs.Where( a => a.MaTaiKhoan == user.MaTaiKhoan).Sum(o => o.SoLuong);
+
             return PartialView("Cart");
         }
 

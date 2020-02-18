@@ -11,7 +11,7 @@
 @using (Html.BeginForm("Login", "Login", FormMethod.Post))
 {
     @Html.AntiForgeryToken()
-    <input type="text" id="login" class="fadeIn second form-control" name="TenDangNhap" placeholder="Tài khoản" required>
-    <input type="password" id="password" class="fadeIn third form-control" name="MatKhau" placeholder="Mật khẩu" required>
+    <input type="text" id="login" class="form-control" name="TenDangNhap" placeholder="Tài khoản" required>
+    <input type="password" id="password" class="form-control" name="MatKhau" placeholder="Mật khẩu" required>
     <input type="submit" class="fadeIn fourth" value="Đăng nhập">
 }

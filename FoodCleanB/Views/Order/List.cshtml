@@ -17,7 +17,7 @@
     else
     {
         <div class="total">
-            Số lượng: @Model.Count()
+            Số lượng: @Model.Sum(o => o.SoLuong)
         </div>
 
         <table class="table">
