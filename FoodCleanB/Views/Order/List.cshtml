@@ -43,10 +43,12 @@
             {
                 <tr>
                     <td>
-                        <a href="@Url.Action("Detail", "SanPham", new { ItemId = item.ItemId })" title="Xem"><img src="@item.AnhSanPham" alt="@item.TenHang" /></a>
+                        <a class="image-box" href="@Url.Action("Detail", "SanPham", new {ItemId = item.ItemId})" title="Xem">
+                            <img src="@item.AnhSanPham" alt="@item.TenHang" style="max-width: 150px; height: auto;" />
+                        </a>
                     </td>
                     <td>
-                        <a href="@Url.Action("Detail", "SanPham", new { ItemId = item.ItemId })" title="Xem">@item.TenHang</a>
+                        <a href="@Url.Action("Detail", "SanPham", new { ItemId = item.ItemId, Title = item.TenHang })" title="Xem">@item.TenHang</a>
                     </td>
                     <td>
                         @item.SoLuong

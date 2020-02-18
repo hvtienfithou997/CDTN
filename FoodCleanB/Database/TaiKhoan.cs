@@ -18,8 +18,8 @@ namespace FoodCleanB.Database
         public TaiKhoan()
         {
             this.DonHangs = new HashSet<DonHang>();
-            this.SanPhamGioHangs = new HashSet<SanPhamGioHang>();
             this.ThongTinKhachHangs = new HashSet<ThongTinKhachHang>();
+            this.SanPhamGioHangs = new HashSet<SanPhamGioHang>();
         }
     
         public System.Guid MaTaiKhoan { get; set; }
@@ -32,8 +32,8 @@ namespace FoodCleanB.Database
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<DonHang> DonHangs { get; set; }
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
-        public virtual ICollection<SanPhamGioHang> SanPhamGioHangs { get; set; }
-        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<ThongTinKhachHang> ThongTinKhachHangs { get; set; }
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
+        public virtual ICollection<SanPhamGioHang> SanPhamGioHangs { get; set; }
     }
 }

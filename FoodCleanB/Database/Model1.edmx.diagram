@@ -13,17 +13,17 @@
         <EntityTypeShape EntityType="CDLTModel.sysdiagram" Width="1.5" PointX="7.75" PointY="1.875" IsExpanded="true" />
         <EntityTypeShape EntityType="CDLTModel.TaiKhoan" Width="1.5" PointX="3" PointY="8.25" IsExpanded="true" />
         <EntityTypeShape EntityType="CDLTModel.ThongTinKhachHang" Width="1.5" PointX="5.25" PointY="8.25" IsExpanded="true" />
-        <EntityTypeShape EntityType="CDLTModel.SanPhamGioHang" Width="1.5" PointX="6.25" PointY="0.5" IsExpanded="true" />
         <AssociationConnector Association="CDLTModel.FK__ChiTietDo__MaDon__151B244E" ManuallyRouted="false" />
         <AssociationConnector Association="CDLTModel.FK__DonHang__MaGiamG__10566F31" ManuallyRouted="false" />
         <AssociationConnector Association="CDLTModel.FK__DonHang__MaTaiKh__114A936A" ManuallyRouted="false" />
-        <AssociationConnector Association="CDLTModel.FK__SanPhamGi__MaTai__1BC821DD" ManuallyRouted="false" />
         <AssociationConnector Association="CDLTModel.FK__ThongTinK__MaTai__07C12930" ManuallyRouted="false" />
         <EntityTypeShape EntityType="CDLTModel.SanPham" Width="1.5" PointX="3" PointY="1.375" IsExpanded="true" />
         <AssociationConnector Association="CDLTModel.FK__ChiTietDo__MaHan__160F4887" />
         <AssociationConnector Association="CDLTModel.FK__SanPham__MaNhaCu__76969D2E" />
         <AssociationConnector Association="CDLTModel.FK__SanPham__MaNhomH__778AC167" />
+        <EntityTypeShape EntityType="CDLTModel.SanPhamGioHang" Width="1.5" PointX="8.25" PointY="5.125" />
         <AssociationConnector Association="CDLTModel.FK__SanPhamGi__MaHan__1CBC4616" />
+        <AssociationConnector Association="CDLTModel.FK__SanPhamGi__MaTai__1BC821DD" />
       </Diagram>
     </edmx:Diagrams>
   </edmx:Designer>

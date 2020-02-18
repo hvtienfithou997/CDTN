@@ -71,17 +71,14 @@
           <Property Name="KhuyenMai" Type="decimal" Precision="18" Scale="0" />
           <Property Name="AnhSanPham" Type="ntext" />
         </EntityType>
-        <!--Errors Found During Generation:
-warning 6002: The table/view 'CDLT.dbo.SanPhamGioHang' does not have a primary key defined. The key has been inferred and the definition was created as a read-only table/view.-->
         <EntityType Name="SanPhamGioHang">
           <Key>
-            <PropertyRef Name="MaTaiKhoan" />
-            <PropertyRef Name="MaHang" />
-            <PropertyRef Name="SoLuong" />
+            <PropertyRef Name="Id" />
           </Key>
           <Property Name="MaTaiKhoan" Type="uniqueidentifier" Nullable="false" />
           <Property Name="MaHang" Type="int" Nullable="false" />
           <Property Name="SoLuong" Type="int" Nullable="false" />
+          <Property Name="Id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
         </EntityType>
         <EntityType Name="sysdiagrams">
           <Key>
@@ -232,16 +229,10 @@ warning 6002: The table/view 'CDLT.dbo.SanPhamGioHang' does not have a primary k
           <EntitySet Name="NhaCungCap" EntityType="Self.NhaCungCap" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="NhomHang" EntityType="Self.NhomHang" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="SanPham" EntityType="Self.SanPham" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="SanPhamGioHang" EntityType="Self.SanPhamGioHang" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="sysdiagrams" EntityType="Self.sysdiagrams" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="TaiKhoan" EntityType="Self.TaiKhoan" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="ThongTinKhachHang" EntityType="Self.ThongTinKhachHang" Schema="dbo" store:Type="Tables" />
-          <EntitySet Name="SanPhamGioHang" EntityType="Self.SanPhamGioHang" store:Type="Tables" store:Schema="dbo">
-            <DefiningQuery>SELECT 
-    [SanPhamGioHang].[MaTaiKhoan] AS [MaTaiKhoan], 
-    [SanPhamGioHang].[MaHang] AS [MaHang], 
-    [SanPhamGioHang].[SoLuong] AS [SoLuong]
-    FROM [dbo].[SanPhamGioHang] AS [SanPhamGioHang]</DefiningQuery>
-          </EntitySet>
           <AssociationSet Name="FK__ChiTietDo__MaDon__151B244E" Association="Self.FK__ChiTietDo__MaDon__151B244E">
             <End Role="DonHang" EntitySet="DonHang" />
             <End Role="ChiTietDonHang" EntitySet="ChiTietDonHang" />
@@ -361,8 +352,8 @@ warning 6002: The table/view 'CDLT.dbo.SanPhamGioHang' does not have a primary k
           <Property Name="TokenResetMatKhau" Type="String" MaxLength="250" FixedLength="false" Unicode="true" />
           <Property Name="TokenNgayHetHan" Type="DateTimeOffset" Precision="0" />
           <NavigationProperty Name="DonHangs" Relationship="Self.FK__DonHang__MaTaiKh__114A936A" FromRole="TaiKhoan" ToRole="DonHang" />
-          <NavigationProperty Name="SanPhamGioHangs" Relationship="Self.FK__SanPhamGi__MaTai__1BC821DD" FromRole="TaiKhoan" ToRole="SanPhamGioHang" />
           <NavigationProperty Name="ThongTinKhachHangs" Relationship="Self.FK__ThongTinK__MaTai__07C12930" FromRole="TaiKhoan" ToRole="ThongTinKhachHang" />
+          <NavigationProperty Name="SanPhamGioHangs" Relationship="CDLTModel.FK__SanPhamGi__MaTai__1BC821DD" FromRole="TaiKhoan" ToRole="SanPhamGioHang" />
         </EntityType>
         <EntityType Name="ThongTinKhachHang">
           <Key>
@@ -377,18 +368,6 @@ warning 6002: The table/view 'CDLT.dbo.SanPhamGioHang' does not have a primary k
           <Property Name="MacDinh" Type="Boolean" />
           <Property Name="MaTaiKhoan" Type="Guid" Nullable="false" />
           <NavigationProperty Name="TaiKhoan" Relationship="Self.FK__ThongTinK__MaTai__07C12930" FromRole="ThongTinKhachHang" ToRole="TaiKhoan" />
-        </EntityType>
-        <EntityType Name="SanPhamGioHang">
-          <Key>
-            <PropertyRef Name="MaTaiKhoan" />
-            <PropertyRef Name="MaHang" />
-            <PropertyRef Name="SoLuong" />
-          </Key>
-          <Property Name="MaTaiKhoan" Type="Guid" Nullable="false" />
-          <Property Name="MaHang" Type="Int32" Nullable="false" />
-          <Property Name="SoLuong" Type="Int32" Nullable="false" />
-          <NavigationProperty Name="TaiKhoan" Relationship="Self.FK__SanPhamGi__MaTai__1BC821DD" FromRole="SanPhamGioHang" ToRole="TaiKhoan" />
-          <NavigationProperty Name="SanPham" Relationship="CDLTModel.FK__SanPhamGi__MaHan__1CBC4616" FromRole="SanPhamGioHang" ToRole="SanPham" />
         </EntityType>
         <Association Name="FK__ChiTietDo__MaDon__151B244E">
           <End Role="DonHang" Type="Self.DonHang" Multiplicity="1" />
@@ -426,18 +405,6 @@ warning 6002: The table/view 'CDLT.dbo.SanPhamGioHang' does not have a primary k
             </Dependent>
           </ReferentialConstraint>
         </Association>
-        <Association Name="FK__SanPhamGi__MaTai__1BC821DD">
-          <End Role="TaiKhoan" Type="Self.TaiKhoan" Multiplicity="1" />
-          <End Role="SanPhamGioHang" Type="Self.SanPhamGioHang" Multiplicity="*" />
-          <ReferentialConstraint>
-            <Principal Role="TaiKhoan">
-              <PropertyRef Name="MaTaiKhoan" />
-            </Principal>
-            <Dependent Role="SanPhamGioHang">
-              <PropertyRef Name="MaTaiKhoan" />
-            </Dependent>
-          </ReferentialConstraint>
-        </Association>
         <Association Name="FK__ThongTinK__MaTai__07C12930">
           <End Role="TaiKhoan" Type="Self.TaiKhoan" Multiplicity="1" />
           <End Role="ThongTinKhachHang" Type="Self.ThongTinKhachHang" Multiplicity="*" />
@@ -459,7 +426,6 @@ warning 6002: The table/view 'CDLT.dbo.SanPhamGioHang' does not have a primary k
           <EntitySet Name="sysdiagrams" EntityType="Self.sysdiagram" />
           <EntitySet Name="TaiKhoans" EntityType="Self.TaiKhoan" />
           <EntitySet Name="ThongTinKhachHangs" EntityType="Self.ThongTinKhachHang" />
-          <EntitySet Name="SanPhamGioHangs" EntityType="Self.SanPhamGioHang" />
           <AssociationSet Name="FK__ChiTietDo__MaDon__151B244E" Association="Self.FK__ChiTietDo__MaDon__151B244E">
             <End Role="DonHang" EntitySet="DonHangs" />
             <End Role="ChiTietDonHang" EntitySet="ChiTietDonHangs" />
@@ -471,10 +437,6 @@ warning 6002: The table/view 'CDLT.dbo.SanPhamGioHang' does not have a primary k
           <AssociationSet Name="FK__DonHang__MaTaiKh__114A936A" Association="Self.FK__DonHang__MaTaiKh__114A936A">
             <End Role="TaiKhoan" EntitySet="TaiKhoans" />
             <End Role="DonHang" EntitySet="DonHangs" />
-          </AssociationSet>
-          <AssociationSet Name="FK__SanPhamGi__MaTai__1BC821DD" Association="Self.FK__SanPhamGi__MaTai__1BC821DD">
-            <End Role="TaiKhoan" EntitySet="TaiKhoans" />
-            <End Role="SanPhamGioHang" EntitySet="SanPhamGioHangs" />
           </AssociationSet>
           <AssociationSet Name="FK__ThongTinK__MaTai__07C12930" Association="Self.FK__ThongTinK__MaTai__07C12930">
             <End Role="TaiKhoan" EntitySet="TaiKhoans" />
@@ -493,8 +455,13 @@ warning 6002: The table/view 'CDLT.dbo.SanPhamGioHang' does not have a primary k
             <End Role="NhomHang" EntitySet="NhomHangs" />
             <End Role="SanPham" EntitySet="SanPhams" />
           </AssociationSet>
+          <EntitySet Name="SanPhamGioHangs" EntityType="CDLTModel.SanPhamGioHang" />
           <AssociationSet Name="FK__SanPhamGi__MaHan__1CBC4616" Association="CDLTModel.FK__SanPhamGi__MaHan__1CBC4616">
             <End Role="SanPham" EntitySet="SanPhams" />
+            <End Role="SanPhamGioHang" EntitySet="SanPhamGioHangs" />
+          </AssociationSet>
+          <AssociationSet Name="FK__SanPhamGi__MaTai__1BC821DD" Association="CDLTModel.FK__SanPhamGi__MaTai__1BC821DD">
+            <End Role="TaiKhoan" EntitySet="TaiKhoans" />
             <End Role="SanPhamGioHang" EntitySet="SanPhamGioHangs" />
           </AssociationSet>
         </EntityContainer>
@@ -555,6 +522,17 @@ warning 6002: The table/view 'CDLT.dbo.SanPhamGioHang' does not have a primary k
             </Dependent>
           </ReferentialConstraint>
         </Association>
+        <EntityType Name="SanPhamGioHang">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="MaTaiKhoan" Type="Guid" Nullable="false" />
+          <Property Name="MaHang" Type="Int32" Nullable="false" />
+          <Property Name="SoLuong" Type="Int32" Nullable="false" />
+          <Property Name="Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <NavigationProperty Name="SanPham" Relationship="CDLTModel.FK__SanPhamGi__MaHan__1CBC4616" FromRole="SanPhamGioHang" ToRole="SanPham" />
+          <NavigationProperty Name="TaiKhoan" Relationship="CDLTModel.FK__SanPhamGi__MaTai__1BC821DD" FromRole="SanPhamGioHang" ToRole="TaiKhoan" />
+        </EntityType>
         <Association Name="FK__SanPhamGi__MaHan__1CBC4616">
           <End Type="CDLTModel.SanPham" Role="SanPham" Multiplicity="1" />
           <End Type="CDLTModel.SanPhamGioHang" Role="SanPhamGioHang" Multiplicity="*" />
@@ -564,6 +542,18 @@ warning 6002: The table/view 'CDLT.dbo.SanPhamGioHang' does not have a primary k
             </Principal>
             <Dependent Role="SanPhamGioHang">
               <PropertyRef Name="MaHang" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK__SanPhamGi__MaTai__1BC821DD">
+          <End Type="CDLTModel.TaiKhoan" Role="TaiKhoan" Multiplicity="1" />
+          <End Type="CDLTModel.SanPhamGioHang" Role="SanPhamGioHang" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="TaiKhoan">
+              <PropertyRef Name="MaTaiKhoan" />
+            </Principal>
+            <Dependent Role="SanPhamGioHang">
+              <PropertyRef Name="MaTaiKhoan" />
             </Dependent>
           </ReferentialConstraint>
         </Association>
@@ -664,15 +654,6 @@ warning 6002: The table/view 'CDLT.dbo.SanPhamGioHang' does not have a primary k
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>
-          <EntitySetMapping Name="SanPhamGioHangs">
-            <EntityTypeMapping TypeName="CDLTModel.SanPhamGioHang">
-              <MappingFragment StoreEntitySet="SanPhamGioHang">
-                <ScalarProperty Name="MaTaiKhoan" ColumnName="MaTaiKhoan" />
-                <ScalarProperty Name="MaHang" ColumnName="MaHang" />
-                <ScalarProperty Name="SoLuong" ColumnName="SoLuong" />
-              </MappingFragment>
-            </EntityTypeMapping>
-          </EntitySetMapping>
           <EntitySetMapping Name="SanPhams">
             <EntityTypeMapping TypeName="CDLTModel.SanPham">
               <MappingFragment StoreEntitySet="SanPham">
@@ -688,6 +669,16 @@ warning 6002: The table/view 'CDLT.dbo.SanPhamGioHang' does not have a primary k
                 <ScalarProperty Name="MaNhomHang" ColumnName="MaNhomHang" />
                 <ScalarProperty Name="MaNhaCungCap" ColumnName="MaNhaCungCap" />
                 <ScalarProperty Name="MaHang" ColumnName="MaHang" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="SanPhamGioHangs">
+            <EntityTypeMapping TypeName="CDLTModel.SanPhamGioHang">
+              <MappingFragment StoreEntitySet="SanPhamGioHang">
+                <ScalarProperty Name="Id" ColumnName="Id" />
+                <ScalarProperty Name="SoLuong" ColumnName="SoLuong" />
+                <ScalarProperty Name="MaHang" ColumnName="MaHang" />
+                <ScalarProperty Name="MaTaiKhoan" ColumnName="MaTaiKhoan" />
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>

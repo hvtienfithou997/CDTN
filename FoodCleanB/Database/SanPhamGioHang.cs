@@ -17,6 +17,7 @@ namespace FoodCleanB.Database
         public System.Guid MaTaiKhoan { get; set; }
         public int MaHang { get; set; }
         public int SoLuong { get; set; }
+        public int Id { get; set; }
     
         public virtual SanPham SanPham { get; set; }
         public virtual TaiKhoan TaiKhoan { get; set; }

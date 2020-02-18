@@ -6,33 +6,38 @@
         Chưa có sản phẩm
     </div>
 }
-
-@foreach (var item in Model)
+else
 {
-    <div class="col-lg-3 col-md-6 special-grid best-seller">
-        <div class="products-single fix">
-            <div class="box-img-hover">
-                <div class="type-lb">
-                    <p class="sale">@item.TenHang</p>
+    foreach (var item in Model)
+    {
+        <div class="col-lg-3 col-md-6 special-grid best-seller">
+            <div class="products-single fix">
+                <div class="box-img-hover">
+                    <div class="type-lb">
+                        <p class="sale">@item.TenHang</p>
+                    </div>
+                    <div class="image-box">
+                        <img src="@item.AnhSanPham" class="img-fluid" alt="Image">
+                    </div>
+                    
+                    <div class="mask-icon">
+                        <ul>
+                            <li>
+                                <a href="@Url.Action("Detail", new {ItemId = item.MaHang, Title = item.TenHang})" data-toggle="tooltip" data-placement="right" title="View">
+                                    <i class="fas fa-eye"></i>
+                                </a>
+                            </li>
+                            <li><a href="#" data-toggle="tooltip" data-placement="right" title="Lưu lại"><i class="far fa-heart"></i></a></li>
+                        </ul>
+                        <a class="cart add-card" href="#" data-itemid="@item.MaHang">Thêm vào giỏ</a>
+                    </div>
                 </div>
-
-                <img src="@item.AnhSanPham" class="img-fluid" alt="Image">
-                <div class="mask-icon">
-                    <ul>
-                        <li>
-                            <a href="@Url.Action("Detail", new {ItemId = item.MaHang, Title = item.TenHang})" data-toggle="tooltip" data-placement="right" title="View">
-                                <i class="fas fa-eye"></i>
-                            </a>
-                        </li>
-                        <li><a href="#" data-toggle="tooltip" data-placement="right" title="Add to Wishlist"><i class="far fa-heart"></i></a></li>
-                    </ul>
-                    <a class="cart" href="#" data-itemid="@item.MaHang">Thêm vào giỏ</a>
+                <div class="why-text">
+                    <h4>Rau củ</h4>
+                    <h5>@item.GiaThanh đ</h5>
                 </div>
-            </div>
-            <div class="why-text">
-                <h4>Rau củ</h4>
-                <h5> $7.79</h5>
             </div>
         </div>
-    </div>
+    }
+
 }

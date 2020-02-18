@@ -1,4 +1,5 @@
-﻿using FoodCleanB.Database;
+﻿using System;
+using FoodCleanB.Database;
 using FoodCleanB.Helpers;
 using FoodCleanB.Models;
 using System.Linq;
@@ -9,8 +10,15 @@ namespace FoodCleanB.Controllers
     [Login]
     public class OrderController : BaseController
     {
-        [Route("them-vao-gio-hang/{itemId}")]
-        [HttpGet]
+        [ChildActionOnly]
+        public PartialViewResult CartCount()
+        {
+            ViewBag.CartCount = Db.SanPhamGioHangs.Count();
+            return PartialView("Cart");
+        }
+
+        [Route("them-vao-gio-hang")]
+        [HttpPost]
         public ActionResult Insert(int itemId)
         {
             var outOfStock = Db.SanPhams.FirstOrDefault(o => o.MaHang == itemId);
@@ -37,16 +45,25 @@ namespace FoodCleanB.Controllers
                 var newItem = new SanPhamGioHang
                 {
                     MaHang = itemId,
-                    MaTaiKhoan = user.MaTaiKhoan
+                    MaTaiKhoan = user.MaTaiKhoan,
+                    SoLuong = 1
                 };
 
                 Db.SanPhamGioHangs.Add(newItem);
             }
 
-            // Luu lai
-            Db.SaveChanges();
+            try
+            {
+                // Luu lai
+                Db.SaveChanges();
+                return Json(new {  Code = 1, Message = "Thêm thành công" }, JsonRequestBehavior.AllowGet);
+            }
+            catch (Exception e)
+            {
+                return Json(new {  Code = 0, Message = e.Message }, JsonRequestBehavior.AllowGet);
+            }
 
-            return Json(new {  Code = 1, Message = "Thêm thành công" }, JsonRequestBehavior.AllowGet);
+            
         }
 
         [Route("gio-hang")]

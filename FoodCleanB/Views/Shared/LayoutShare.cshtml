@@ -31,7 +31,7 @@
     <link rel="stylesheet" href="~/css/responsive.css">
     <!-- Custom CSS -->
     <link rel="stylesheet" href="~/css/custom.css">
-        <!-- End copyright  -->
+    <!-- End copyright  -->
     <!-- ALL JS FILES -->
     <script src="~/Scripts/jquery-3.4.1.min.js"></script>
     <script src="~/Scripts/jquery-3.4.1.js"></script>
@@ -49,6 +49,31 @@
     <script src="js/form-validator.min.js"></script>
     <script src="js/contact-form-script.js"></script>
     <script src="js/custom.js"></script>
+
+    <script>
+        $(document).on('click', '.add-card', function () {
+            var itemId = $(this).data('itemid');
+            console.log(itemId);
+
+            $.ajax({
+                    method: 'POST',
+                    url: '@Url.Action("Insert", "Order")',
+                    data: { 'itemId': itemId },
+                    success: function(data) {
+                        alert(data.Message);
+
+                        if (data.Code == 1) {
+                            var soSanPham = $('#cartCount').text();
+                            if (!soSanPham) {
+                                soSanPham = 0;
+                            }
+
+                            $('#cartCount').text(soSanPham++);
+                        }
+                    }
+                });
+        });
+    </script>
 </head>
 <body>
 
@@ -86,6 +111,14 @@
                         {
                             <li class="nav-item"><a class="nav-link" href="@Url.Action("Index", "Admin")">Admin</a></li>
                         }
+
+                        @if (user != null)
+                        {
+                            <li class="nav-item">
+                                @Html.ActionLink(user.TenDangNhap, "Profile", "Login", null, new { @class = "nav-link"})
+                            </li>
+                        }
+                        
                     </ul>
                 </div>
                 <!-- /.navbar-collapse -->
@@ -93,26 +126,23 @@
                 <div class="attr-nav">
                     <ul>
                         <li class="search"><a href="#"><i class="fa fa-search"></i></a></li>
-                        @if (user != null && user.TenDangNhap !=  "admin")
+                        @if (user != null && user.TenDangNhap != "admin")
                         {
-                            <li class="side-menu">
-                                <a href="@Url.Action("List", "Order")">
-                                    <i class="fa fa-shopping-bag"></i>
-                                    <span>Giỏ hàng của bạn, @user.TenDangNhap</span>
-                                </a>
+                            @Html.Action("CartCount", "Order")
+                        }
+                        
+                        @if (user == null)
+                        {
+                            <li class="">
+                                @Html.ActionLink("Dang Nhap", "Login", "Login", null)
                             </li>
                         }
-                        <li class="user">
-                            @if (user != null)
-                            {
-                                @Html.ActionLink("Thoat", "LogOut", "Login")
-
-                            }
-                            else
-                            {
-                                @Html.ActionLink("Dang Nhap", "Login", "Login")
-                            }
-                        </li>
+                        else
+                        {
+                            <li class="">
+                                @Html.ActionLink("Đăng xuất?", "LogOut", "Login", null)
+                            </li>
+                        }
                     </ul>
                 </div>
                 <!-- End Atribute Navigation -->
@@ -256,6 +286,5 @@
             <a href="https://html.design/">html design</a>
         </p>
     </div>
-
 </body>
 </html>

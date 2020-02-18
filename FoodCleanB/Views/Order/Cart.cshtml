@@ -1,0 +1,12 @@
+﻿@{
+
+    Layout = null;
+}
+
+<li class="side-menu">
+    <a href="@Url.Action("List", "Order")" title="Xem giỏ hàng">
+        <span>Giỏ hàng của bạn</span>
+        <i class="fa fa-shopping-bag"></i> 
+        <span class="cart-count" id="cartCount">@ViewBag.CartCount</span>
+    </a>
+</li>
