@@ -1,41 +1,20 @@
 ﻿@{
-    Layout = null;
+    Layout = "~/Views/Shared/LayoutLogin.cshtml";
+    ViewBag.Title = "Đăng nhập";
 }
 
-<!DOCTYPE html>
-
-<html>
-<head>
-    <meta name="viewport" content="width=device-width" />
-    <title>Đăng nhập</title>
-    <link rel="stylesheet" type="text/css" href="~/css/login.css">
-    <link rel="stylesheet" type="text/css" href="https://fonts.googleapis.com/css?family=Poppins">
-</head>
-<body>
-    <div class="wrapper fadeInDown">
-        <div id="formContent">
-            <!-- Tabs Titles -->
-            <h2 class="active"> Đăng nhập </h2>
-            @*<h2 class="inactive underlineHover">Sign Up </h2>*@
+<h2 class="active">Đăng nhập</h2>
 
             <!-- Icon -->
-            <div class="fadeIn first">
-                <img src="https://i.ya-webdesign.com/images/vegetables-icon-png-5.png" id="icon" alt="User Icon" />
-            </div>
+<div class="fadeIn first">
+    <img src="https://i.ya-webdesign.com/images/vegetables-icon-png-5.png" id="icon" alt="User Icon" />
+</div>
 
-            <!-- Login Form -->
-            @using (Html.BeginForm("Login", "Login", FormMethod.Post))
-            {
-                @Html.AntiForgeryToken()
-                <input type="text" id="login" class="fadeIn second" name="TenDangNhap" placeholder="Tài khoản" required>
-                <input type="password" id="password" class="fadeIn third" name="MatKhau" placeholder="Mật khẩu" required>
-                <input type="submit" class="fadeIn fourth" value="Đăng nhập">
-            }
-
-            <div id="formFooter">
-                <a class="underlineHover" href="#">Chuyên đề tốt nghiệp</a>
-            </div>
-        </div>
-    </div>
-</body>
-</html>
+<!-- Login Form -->
+@using (Html.BeginForm("Login", "Login", FormMethod.Post))
+{
+    @Html.AntiForgeryToken()
+    <input type="text" id="login" class="fadeIn second" name="TenDangNhap" placeholder="Tài khoản" required>
+    <input type="password" id="password" class="fadeIn third" name="MatKhau" placeholder="Mật khẩu" required>
+    <input type="submit" class="fadeIn fourth" value="Đăng nhập">
+}

@@ -1,0 +1,33 @@
+﻿@{
+    Layout = null;
+}
+
+<!DOCTYPE html>
+
+<html>
+<head>
+    <meta name="viewport" content="width=device-width" />
+    <title>@ViewBag.Title</title>
+    <link rel="stylesheet" type="text/css" href="~/css/login.css">
+    <link rel="stylesheet" type="text/css" href="https://fonts.googleapis.com/css?family=Poppins">
+</head>
+<body>
+    <div class="wrapper fadeInDown">
+        <div id="formContent">
+            <!-- Tabs Titles -->
+            <h2 class="active">@ViewBag.Title</h2>
+
+            <!-- Icon -->
+            <div class="fadeIn first">
+                <img src="https://i.ya-webdesign.com/images/vegetables-icon-png-5.png" id="icon" alt="User Icon" />
+            </div>
+
+            @RenderBody()
+
+            <div id="formFooter">
+                <a class="underlineHover" href="#">Chuyên đề tốt nghiệp</a>
+            </div>
+        </div>
+    </div>
+</body>
+</html>
