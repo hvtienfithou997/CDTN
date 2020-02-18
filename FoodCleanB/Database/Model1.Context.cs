@@ -30,10 +30,10 @@ namespace FoodCleanB.Database
         public virtual DbSet<DonHang> DonHangs { get; set; }
         public virtual DbSet<NhaCungCap> NhaCungCaps { get; set; }
         public virtual DbSet<NhomHang> NhomHangs { get; set; }
-        public virtual DbSet<SanPham> SanPhams { get; set; }
         public virtual DbSet<sysdiagram> sysdiagrams { get; set; }
         public virtual DbSet<TaiKhoan> TaiKhoans { get; set; }
         public virtual DbSet<ThongTinKhachHang> ThongTinKhachHangs { get; set; }
         public virtual DbSet<SanPhamGioHang> SanPhamGioHangs { get; set; }
+        public virtual DbSet<SanPham> SanPhams { get; set; }
     }
 }

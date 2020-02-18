@@ -26,13 +26,13 @@ namespace FoodCleanB.Database
         public int MaNhomHang { get; set; }
         public Nullable<System.Guid> Sku { get; set; }
         public string TenHang { get; set; }
-        public byte[] AnhSanPham { get; set; }
         public string MoTa { get; set; }
         public decimal GiaThanh { get; set; }
         public int SoLuong { get; set; }
         public Nullable<decimal> KhoiLuong { get; set; }
         public Nullable<decimal> TheTich { get; set; }
         public Nullable<decimal> KhuyenMai { get; set; }
+        public string AnhSanPham { get; set; }
     
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<ChiTietDonHang> ChiTietDonHangs { get; set; }
