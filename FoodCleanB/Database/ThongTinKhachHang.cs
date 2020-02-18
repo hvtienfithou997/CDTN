@@ -12,14 +12,17 @@ namespace FoodCleanB.Database
     using System;
     using System.Collections.Generic;
     
-    public partial class CTDH
+    public partial class ThongTinKhachHang
     {
-        public string MaDH { get; set; }
-        public string MaHang { get; set; }
-        public Nullable<double> SoLuong { get; set; }
-        public Nullable<double> DonGia { get; set; }
+        public System.Guid MaSo { get; set; }
+        public string Ten { get; set; }
+        public string SDT { get; set; }
+        public string DiaChi { get; set; }
+        public Nullable<System.DateTime> NgaySinh { get; set; }
+        public string GioiTinh { get; set; }
+        public Nullable<bool> MacDinh { get; set; }
+        public System.Guid MaTaiKhoan { get; set; }
     
-        public virtual DON_HANG DON_HANG { get; set; }
-        public virtual HANG HANG { get; set; }
+        public virtual TaiKhoan TaiKhoan { get; set; }
     }
 }

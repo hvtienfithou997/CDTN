@@ -12,27 +12,21 @@ namespace FoodCleanB.Database
     using System;
     using System.Collections.Generic;
     
-    public partial class DON_HANG
+    public partial class Coupon
     {
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2214:DoNotCallOverridableMethodsInConstructors")]
-        public DON_HANG()
+        public Coupon()
         {
-            this.CTDHs = new HashSet<CTDH>();
+            this.DonHangs = new HashSet<DonHang>();
         }
     
-        public string MaDH { get; set; }
-        public string MaTaiKhoan { get; set; }
-        public string MaKH { get; set; }
-        public byte[] AnhSanPham { get; set; }
-        public string TenSanPham { get; set; }
-        public Nullable<double> DonGia { get; set; }
-        public Nullable<double> SoLuong { get; set; }
-        public Nullable<double> TongTien { get; set; }
-        public Nullable<System.DateTime> NgayLap { get; set; }
+        public System.Guid MaSo { get; set; }
+        public Nullable<decimal> KhuyenMai { get; set; }
+        public Nullable<System.DateTimeOffset> NgayHetHan { get; set; }
+        public Nullable<int> SoLuong { get; set; }
+        public Nullable<bool> Active { get; set; }
     
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
-        public virtual ICollection<CTDH> CTDHs { get; set; }
-        public virtual KHACH_HANG KHACH_HANG { get; set; }
-        public virtual TAI_KHOAN TAI_KHOAN { get; set; }
+        public virtual ICollection<DonHang> DonHangs { get; set; }
     }
 }

@@ -12,26 +12,26 @@ namespace FoodCleanB.Database
     using System;
     using System.Collections.Generic;
     
-    public partial class HANG
+    public partial class DonHang
     {
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2214:DoNotCallOverridableMethodsInConstructors")]
-        public HANG()
+        public DonHang()
         {
-            this.CTDHs = new HashSet<CTDH>();
+            this.ChiTietDonHangs = new HashSet<ChiTietDonHang>();
         }
     
-        public string MaHang { get; set; }
-        public string MaNCC { get; set; }
-        public string MaNhomHang { get; set; }
-        public string TenHang { get; set; }
-        public byte[] AnhSanPham { get; set; }
-        public string MoTa { get; set; }
-        public Nullable<double> DonGia { get; set; }
-        public Nullable<double> SoLuong { get; set; }
+        public System.Guid MaSo { get; set; }
+        public System.Guid MaTaiKhoan { get; set; }
+        public string Ten { get; set; }
+        public string SDT { get; set; }
+        public string DiaChi { get; set; }
+        public Nullable<System.Guid> MaGiamGia { get; set; }
+        public decimal TongTien { get; set; }
+        public Nullable<System.DateTimeOffset> NgayLap { get; set; }
     
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
-        public virtual ICollection<CTDH> CTDHs { get; set; }
-        public virtual NCC NCC { get; set; }
-        public virtual NHOM_HANG NHOM_HANG { get; set; }
+        public virtual ICollection<ChiTietDonHang> ChiTietDonHangs { get; set; }
+        public virtual Coupon Coupon { get; set; }
+        public virtual TaiKhoan TaiKhoan { get; set; }
     }
 }

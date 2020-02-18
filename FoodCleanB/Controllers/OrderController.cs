@@ -12,10 +12,10 @@ namespace FoodCleanB.Controllers
         [Route("them/{itemId}")]
         public ActionResult Insert(int itemId)
         {
-            TAI_KHOAN user = (TAI_KHOAN)Session["User"];
+            TaiKhoan user = (TaiKhoan)Session["User"];
 
             // Sản phẩm đã có trong giỏ hàng
-            var existed = Db.SanPhamGioHang.SingleOrDefault(b => b.MaTaiKhoan == user.MaTaiKhoan && b.ItemId == itemId);
+            var existed = Db.SanPhamGioHangs.SingleOrDefault(b => b.MaTaiKhoan == user.MaTaiKhoan && b.MaHang == itemId);
 
             // Tăng số lượng của sản phẩm đã có
             if (existed != null)
@@ -25,13 +25,13 @@ namespace FoodCleanB.Controllers
             else
             {
                 // Thêm mới sản phẩm
-                var newItem = new UserCartItemModel
+                var newItem = new SanPhamGioHang
                 {
-                    ItemId = itemId,
+                    MaHang = itemId,
                     MaTaiKhoan = user.MaTaiKhoan
                 };
 
-                Db.SanPhamGioHang.Add(newItem);
+                Db.SanPhamGioHangs.Add(newItem);
             }
 
             // Luu lai
@@ -44,12 +44,12 @@ namespace FoodCleanB.Controllers
         [HttpGet]
         public ActionResult List()
         {
-            TAI_KHOAN user = (TAI_KHOAN)Session["User"];
+            TaiKhoan user = (TaiKhoan)Session["User"];
 
             // Lay thong tin gio hang day tu session
 
             // Lay danh sach item  da co gio hang trong session
-            var danhSachGioHang = Db.SanPhamGioHang.Where(b => b.MaTaiKhoan == user.MaTaiKhoan).ToList();
+            var danhSachGioHang = Db.SanPhamGioHangs.Where(b => b.MaTaiKhoan == user.MaTaiKhoan).ToList();
 
             // Join voi bang Hang de lay ten sản phẩm
             if (danhSachGioHang != null)

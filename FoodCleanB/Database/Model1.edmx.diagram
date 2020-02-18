@@ -4,21 +4,26 @@
   <edmx:Designer xmlns="http://schemas.microsoft.com/ado/2009/11/edmx">
     <!-- Diagram content (shape and connector positions) -->
     <edmx:Diagrams>
-      <Diagram DiagramId="e4a6af22517b4607912b750301cea726" Name="Diagram1">
-        <EntityTypeShape EntityType="CDLTModel.CTDH" Width="1.5" PointX="5.25" PointY="1.5" IsExpanded="true" />
-        <EntityTypeShape EntityType="CDLTModel.DON_HANG" Width="1.5" PointX="3" PointY="9.375" IsExpanded="true" />
-        <EntityTypeShape EntityType="CDLTModel.HANG" Width="1.5" PointX="3" PointY="1" IsExpanded="true" />
-        <EntityTypeShape EntityType="CDLTModel.KHACH_HANG" Width="1.5" PointX="0.75" PointY="8.625" IsExpanded="true" />
-        <EntityTypeShape EntityType="CDLTModel.NCC" Width="1.5" PointX="0.75" PointY="1.5" IsExpanded="true" />
-        <EntityTypeShape EntityType="CDLTModel.NHOM_HANG" Width="1.5" PointX="0.75" PointY="5.375" IsExpanded="true" />
-        <EntityTypeShape EntityType="CDLTModel.sysdiagram" Width="1.5" PointX="2.75" PointY="5.75" IsExpanded="true" />
-        <EntityTypeShape EntityType="CDLTModel.TAI_KHOAN" Width="1.5" PointX="0.75" PointY="11.75" IsExpanded="true" />
-        <AssociationConnector Association="CDLTModel.FK_CTDH_DON_HANG" ManuallyRouted="false" />
-        <AssociationConnector Association="CDLTModel.FK_CTDH_HANG" ManuallyRouted="false" />
-        <AssociationConnector Association="CDLTModel.FK_DON_HANG_KHACH_HANG" ManuallyRouted="false" />
-        <AssociationConnector Association="CDLTModel.FK_DON_HANG_TAI_KHOAN" ManuallyRouted="false" />
-        <AssociationConnector Association="CDLTModel.FK_HANG_NCC" ManuallyRouted="false" />
-        <AssociationConnector Association="CDLTModel.FK_HANG_NHOM_HANG" ManuallyRouted="false" />
+      <Diagram DiagramId="46778ae7daf741368224ffb070bdc1e3" Name="Diagram1">
+        <EntityTypeShape EntityType="CDLTModel.ChiTietDonHang" Width="1.5" PointX="5.25" PointY="3.5" IsExpanded="true" />
+        <EntityTypeShape EntityType="CDLTModel.Coupon" Width="1.5" PointX="0.75" PointY="12.625" IsExpanded="true" />
+        <EntityTypeShape EntityType="CDLTModel.DonHang" Width="1.5" PointX="3" PointY="12.125" IsExpanded="true" />
+        <EntityTypeShape EntityType="CDLTModel.NhaCungCap" Width="1.5" PointX="0.75" PointY="3.75" IsExpanded="true" />
+        <EntityTypeShape EntityType="CDLTModel.NhomHang" Width="1.5" PointX="0.75" PointY="1" IsExpanded="true" />
+        <EntityTypeShape EntityType="CDLTModel.SanPham" Width="1.5" PointX="3" PointY="2.75" IsExpanded="true" />
+        <EntityTypeShape EntityType="CDLTModel.sysdiagram" Width="1.5" PointX="7.75" PointY="1.875" IsExpanded="true" />
+        <EntityTypeShape EntityType="CDLTModel.TaiKhoan" Width="1.5" PointX="3" PointY="8.25" IsExpanded="true" />
+        <EntityTypeShape EntityType="CDLTModel.ThongTinKhachHang" Width="1.5" PointX="5.25" PointY="8.25" IsExpanded="true" />
+        <EntityTypeShape EntityType="CDLTModel.SanPhamGioHang" Width="1.5" PointX="5.25" PointY="0.75" IsExpanded="true" />
+        <AssociationConnector Association="CDLTModel.FK__ChiTietDo__MaDon__151B244E" ManuallyRouted="false" />
+        <AssociationConnector Association="CDLTModel.FK__ChiTietDo__MaHan__160F4887" ManuallyRouted="false" />
+        <AssociationConnector Association="CDLTModel.FK__DonHang__MaGiamG__10566F31" ManuallyRouted="false" />
+        <AssociationConnector Association="CDLTModel.FK__DonHang__MaTaiKh__114A936A" ManuallyRouted="false" />
+        <AssociationConnector Association="CDLTModel.FK__SanPham__MaNhaCu__76969D2E" ManuallyRouted="false" />
+        <AssociationConnector Association="CDLTModel.FK__SanPham__MaNhomH__778AC167" ManuallyRouted="false" />
+        <AssociationConnector Association="CDLTModel.FK__SanPhamGi__MaHan__1CBC4616" ManuallyRouted="false" />
+        <AssociationConnector Association="CDLTModel.FK__SanPhamGi__MaTai__1BC821DD" ManuallyRouted="false" />
+        <AssociationConnector Association="CDLTModel.FK__ThongTinK__MaTai__07C12930" ManuallyRouted="false" />
       </Diagram>
     </edmx:Diagrams>
   </edmx:Designer>

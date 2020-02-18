@@ -1,15 +1,43 @@
-﻿using System.Linq;
+﻿using FoodCleanB.Database;
+using System.Linq;
 using System.Web.Mvc;
-using FoodCleanB.Database;
 
 namespace FoodCleanB.Helpers
 {
+    public class GetSessionAttribute : ActionFilterAttribute, IActionFilter
+    {
+        void IActionFilter.OnActionExecuting(ActionExecutingContext filterContext)
+        {
+            string userCookie = filterContext.HttpContext.Request.Cookies["MyFoodFreshCookie"]?.Value;
+
+            if (userCookie != null)
+            {
+                // Giai ma cookie de lay ma tai khoan
+                string maTaiKhoanTrongCookie = EncryptHelper.Base64Decode(userCookie);
+
+                var userId = filterContext.HttpContext.Session.Contents["User"];
+
+                if (userId == null)
+                {
+                    CDLTEntities1 db = new CDLTEntities1();
+
+                    TaiKhoan user = db.TaiKhoans.FirstOrDefault(x => x.MaTaiKhoan.ToString() == maTaiKhoanTrongCookie);
+
+                    if (user != null)
+                    {
+                        filterContext.HttpContext.Session.Contents["User"] = user;
+                    }
+                }
+            }
+        }
+    }
+
     public class LoginAttribute : ActionFilterAttribute, IActionFilter
     {
         void IActionFilter.OnActionExecuting(ActionExecutingContext filterContext)
         {
-            string userCookie = filterContext.HttpContext.Request.Cookies["MyFreshFoodCookie"]?.Value;
-            
+            var userCookie = filterContext.HttpContext.Request.Cookies["MyFoodFreshCookie"]?.Value;
+
             // Giai ma cookie de lay ma tai khoan
             string maTaiKhoanTrongCookie = EncryptHelper.Base64Decode(userCookie);
 
@@ -21,19 +49,19 @@ namespace FoodCleanB.Helpers
                 );
             }
 
-            var userId = filterContext.HttpContext.Session.Contents["User"];
+            //var userId = filterContext.HttpContext.Session.Contents["User"];
 
-            if (userId == null)
-            {
-                CDLTEntities db = new CDLTEntities();
+            //if (userId == null)
+            //{
+            //    CDLTEntities1 db = new CDLTEntities1();
 
-                TAI_KHOAN user = db.TAI_KHOAN.FirstOrDefault(x => x.MaTaiKhoan == maTaiKhoanTrongCookie);
+            //    TaiKhoan user = db.TaiKhoans.FirstOrDefault(x => x.MaTaiKhoan.ToString() == maTaiKhoanTrongCookie);
 
-                if (user != null)
-                {
-                    filterContext.HttpContext.Session.Contents["User"] = user;
-                }
-            }
+            //    if (user != null)
+            //    {
+            //        filterContext.HttpContext.Session.Contents["User"] = user;
+            //    }
+            //}
         }
     }
 }

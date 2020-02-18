@@ -12,22 +12,20 @@ namespace FoodCleanB.Database
     using System;
     using System.Collections.Generic;
     
-    public partial class NHOM_HANG
+    public partial class NhaCungCap
     {
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2214:DoNotCallOverridableMethodsInConstructors")]
-        public NHOM_HANG()
+        public NhaCungCap()
         {
-            this.HANGs = new HashSet<HANG>();
+            this.SanPhams = new HashSet<SanPham>();
         }
     
-        public string MaNhomHang { get; set; }
-        public string TenNhomHang { get; set; }
-        public Nullable<System.DateTime> NgayNhap { get; set; }
-        public Nullable<System.DateTime> NgayXuat { get; set; }
-        public Nullable<double> DonGia { get; set; }
-        public Nullable<double> SoLuong { get; set; }
+        public System.Guid MaSo { get; set; }
+        public string Ten { get; set; }
+        public string Sdt { get; set; }
+        public string DiaChi { get; set; }
     
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
-        public virtual ICollection<HANG> HANGs { get; set; }
+        public virtual ICollection<SanPham> SanPhams { get; set; }
     }
 }

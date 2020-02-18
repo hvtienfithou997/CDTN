@@ -1,7 +1,7 @@
 ﻿@using FoodCleanB.Database
 
 @{
-    TAI_KHOAN user = Session["User"] as TAI_KHOAN;
+    TaiKhoan user = Session["User"] as TaiKhoan;
 }
 
 <html>
@@ -76,7 +76,7 @@
                             <li class="side-menu">
                                 <a href="#">
                                     <i class="fa fa-shopping-bag"></i>
-                                    <a href="@Url.Action("List", "Order")">Giỏ hàng của banj, @user.TenDangNhap</a>
+                                    <a href="@Url.Action("List", "Order")">Giỏ hàng của bạn, @user.TenDangNhap</a>
                                 </a>
                             </li>
                         }

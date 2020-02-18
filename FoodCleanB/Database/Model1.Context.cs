@@ -13,10 +13,10 @@ namespace FoodCleanB.Database
     using System.Data.Entity;
     using System.Data.Entity.Infrastructure;
     
-    public partial class CDLTEntities : DbContext
+    public partial class CDLTEntities1 : DbContext
     {
-        public CDLTEntities()
-            : base("name=CDLTEntities")
+        public CDLTEntities1()
+            : base("name=CDLTEntities1")
         {
         }
     
@@ -25,13 +25,15 @@ namespace FoodCleanB.Database
             throw new UnintentionalCodeFirstException();
         }
     
-        public virtual DbSet<CTDH> CTDHs { get; set; }
-        public virtual DbSet<DON_HANG> DON_HANG { get; set; }
-        public virtual DbSet<HANG> HANGs { get; set; }
-        public virtual DbSet<KHACH_HANG> KHACH_HANG { get; set; }
-        public virtual DbSet<NCC> NCCs { get; set; }
-        public virtual DbSet<NHOM_HANG> NHOM_HANG { get; set; }
+        public virtual DbSet<ChiTietDonHang> ChiTietDonHangs { get; set; }
+        public virtual DbSet<Coupon> Coupons { get; set; }
+        public virtual DbSet<DonHang> DonHangs { get; set; }
+        public virtual DbSet<NhaCungCap> NhaCungCaps { get; set; }
+        public virtual DbSet<NhomHang> NhomHangs { get; set; }
+        public virtual DbSet<SanPham> SanPhams { get; set; }
         public virtual DbSet<sysdiagram> sysdiagrams { get; set; }
-        public virtual DbSet<TAI_KHOAN> TAI_KHOAN { get; set; }
+        public virtual DbSet<TaiKhoan> TaiKhoans { get; set; }
+        public virtual DbSet<ThongTinKhachHang> ThongTinKhachHangs { get; set; }
+        public virtual DbSet<SanPhamGioHang> SanPhamGioHangs { get; set; }
     }
 }
