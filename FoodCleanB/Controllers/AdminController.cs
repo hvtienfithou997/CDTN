@@ -79,7 +79,12 @@ namespace FoodCleanB.Controllers
         [ValidateAntiForgeryToken]
         public ActionResult ThemSanPham(SanPham m)
         {
-            if (!ModelState.IsValid)
+            if (m?.TenHang == null || m.TenHang.Trim().Length == 0)
+            {
+                ModelState.AddModelError("TenHang", "Tên sản phẩm bị bỏ trống.");
+            }
+
+            if (m == null || !ModelState.IsValid)
             {
                 ViewBag.NhaCungCap = Db.NhaCungCaps.Select(o => new SelectListItem { Value = o.MaSo.ToString(), Text = o.Ten }).ToList();
                 ViewBag.NhomHang = Db.NhomHangs.Select(o => new SelectListItem { Value = o.MaSo.ToString(), Text = o.Ten }).ToList();
@@ -90,6 +95,7 @@ namespace FoodCleanB.Controllers
             try
             {
                 m.Sku = Guid.NewGuid();
+                m.TenHang = m.TenHang?.Trim();
 
                 Db.SanPhams.Add(m);
                 Db.SaveChanges();
@@ -127,7 +133,12 @@ namespace FoodCleanB.Controllers
         [ValidateAntiForgeryToken]
         public ActionResult EditSanPham(SanPham m)
         {
-            if (!ModelState.IsValid)
+            if (m?.TenHang == null || m.TenHang.Trim().Length == 0)
+            {
+                ModelState.AddModelError("TenHang", "Tên sản phẩm bị bỏ trống.");
+            }
+
+            if (m == null || !ModelState.IsValid)
             {
                 ViewBag.NhaCungCap = Db.NhaCungCaps.Select(o => new SelectListItem { Value = o.MaSo.ToString(), Text = o.Ten }).ToList();
                 ViewBag.NhomHang = Db.NhomHangs.Select(o => new SelectListItem { Value = o.MaSo.ToString(), Text = o.Ten }).ToList();
@@ -145,6 +156,7 @@ namespace FoodCleanB.Controllers
                     return RedirectToAction("SanPham");
                 }
 
+                existed.TenHang = m.TenHang?.Trim();
                 existed.AnhSanPham = m.AnhSanPham;
                 existed.MaNhaCungCap = m.MaNhaCungCap;
                 existed.MaNhomHang = m.MaNhomHang;
