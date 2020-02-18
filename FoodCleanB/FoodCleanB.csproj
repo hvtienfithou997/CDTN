@@ -146,6 +146,7 @@
     <Compile Include="App_Start\BundleConfig.cs" />
     <Compile Include="App_Start\FilterConfig.cs" />
     <Compile Include="App_Start\RouteConfig.cs" />
+    <Compile Include="Controllers\AdminController.cs" />
     <Compile Include="Controllers\BaseController.cs" />
     <Compile Include="Controllers\HomeController.cs" />
     <Compile Include="Controllers\LoginController.cs" />
@@ -199,6 +200,7 @@
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
+    <Compile Include="Helpers\AdminAttribute.cs" />
     <Compile Include="Helpers\EncryptHelper.cs" />
     <Compile Include="Helpers\LoginAttribute.cs" />
     <Compile Include="Models\LoginModel.cs" />
@@ -371,6 +373,14 @@
     <Content Include="Views\Login\DangKy.cshtml" />
     <Content Include="Views\Order\List.cshtml" />
     <Content Include="Views\SanPham\HomeProduct.cshtml" />
+    <Content Include="Views\Admin\NhomHang.cshtml" />
+    <Content Include="Views\Admin\ThemNhomHang.cshtml" />
+    <Content Include="Views\Admin\Index.cshtml" />
+    <Content Include="Views\Admin\ThemSanPham.cshtml" />
+    <Content Include="Views\Admin\SanPham.cshtml" />
+    <Content Include="Views\Admin\EditSanPham.cshtml" />
+    <Content Include="Views\Admin\ThemNhaCungCap.cshtml" />
+    <Content Include="Views\Admin\NhaCungCap.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

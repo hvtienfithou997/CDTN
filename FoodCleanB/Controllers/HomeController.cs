@@ -8,11 +8,12 @@ using FoodCleanB.Helpers;
 
 namespace FoodCleanB.Controllers
 {
-    //[Login]
     public class HomeController : BaseController
     {
         public ActionResult Index()
         {
+            ViewBag.NhomHang = Db.NhomHangs.ToList();
+
             return View();
         }
     }

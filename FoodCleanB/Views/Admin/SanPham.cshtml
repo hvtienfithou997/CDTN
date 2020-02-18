@@ -1,0 +1,106 @@
+﻿@model IEnumerable<FoodCleanB.Database.SanPham>
+
+@{
+    ViewBag.Title = "Admin - Sản phẩm";
+    Layout = "~/Views/Shared/LayoutShare.cshtml";
+}
+
+<h2>SanPham</h2>
+
+<p>
+    @Html.ActionLink("Thêm mới", "ThemSanPham")
+</p>
+
+@if (TempData["Message"] != null)
+{
+    <h3 class="text-center font-weight-bold">@TempData["Message"]</h3>
+}
+
+<table class="table">
+    <tr>
+        <th>
+            Id
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.Sku)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.TenHang)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.MoTa)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.GiaThanh)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.SoLuong)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.KhoiLuong)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.TheTich)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.KhuyenMai)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.AnhSanPham)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.NhaCungCap.Ten)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.NhomHang.Ten)
+        </th>
+        <th></th>
+    </tr>
+
+    @foreach (var item in Model)
+    {
+        <tr>
+            <td>
+                <span>@item.MaHang</span> <br />
+                <a href=" @Url.Action("Detail", "SanPham", new {ItemId = item.MaHang, Title = item.TenHang})">Xem hàng</a>
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Sku)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.TenHang)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.MoTa)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.GiaThanh) đ
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.SoLuong)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.KhoiLuong)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.TheTich)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.KhuyenMai) đ
+            </td>
+            <td>
+                <img src="@item.AnhSanPham" alt="ảnh" />
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.NhaCungCap.Ten)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.NhomHang.Ten)
+            </td>
+            <td>
+                <a href="@Url.Action("EditSanPham", "Admin", new { MaHang = item.MaHang})" target="_blank">Sửa</a> |
+                @Html.ActionLink("Xóa", "DeleteSanPham", new { MaHang = item.MaHang })
+            </td>
+        </tr>
+    }
+</table>

@@ -80,8 +80,12 @@
                                 <li><a href="wishlist.html">Wishlist</a></li>
                             </ul>
                         </li>
-                        <li class="nav-item"><a class="nav-link" href="gallery.html">Bộ sưu tập</a></li>
                         <li class="nav-item"><a class="nav-link" href="contact-us.html">Liên hệ</a></li>
+
+                        @if (string.Equals(user?.TenDangNhap, "admin", StringComparison.InvariantCultureIgnoreCase))
+                        {
+                            <li class="nav-item"><a class="nav-link" href="@Url.Action("Index", "Admin")">Admin</a></li>
+                        }
                     </ul>
                 </div>
                 <!-- /.navbar-collapse -->
