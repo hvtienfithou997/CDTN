@@ -68,7 +68,7 @@
                 <!-- Collect the nav links, forms, and other content for toggling -->
                 <div class="collapse navbar-collapse" id="navbar-menu">
                     <ul class="nav navbar-nav ml-auto" data-in="fadeInDown" data-out="fadeOutUp">
-                        <li class="nav-item active"><a class="nav-link" href="index.html">Trang chủ</a></li>
+                        <li class="nav-item active"><a class="nav-link" href="@Url.Action("Index", "Home")">Trang chủ</a></li>
                         <li class="nav-item"><a class="nav-link" href="about.html">Về chúng tôi</a></li>
                         <li class="dropdown">
                             <a href="#" class="nav-link dropdown-toggle arrow" data-toggle="dropdown">Cửa hàng</a>
@@ -93,7 +93,7 @@
                 <div class="attr-nav">
                     <ul>
                         <li class="search"><a href="#"><i class="fa fa-search"></i></a></li>
-                        @if (user != null)
+                        @if (user != null && user.TenDangNhap !=  "admin")
                         {
                             <li class="side-menu">
                                 <a href="@Url.Action("List", "Order")">

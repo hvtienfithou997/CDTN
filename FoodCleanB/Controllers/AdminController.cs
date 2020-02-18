@@ -81,6 +81,9 @@ namespace FoodCleanB.Controllers
         {
             if (!ModelState.IsValid)
             {
+                ViewBag.NhaCungCap = Db.NhaCungCaps.Select(o => new SelectListItem { Value = o.MaSo.ToString(), Text = o.Ten }).ToList();
+                ViewBag.NhomHang = Db.NhomHangs.Select(o => new SelectListItem { Value = o.MaSo.ToString(), Text = o.Ten }).ToList();
+
                 return View(m);
             }
 
@@ -97,14 +100,17 @@ namespace FoodCleanB.Controllers
             }
             catch (Exception ex)
             {
-                ModelState.AddModelError("Ten", ex.Message);
-                return View(m);
+                TempData["Message"] = (ex.InnerException ?? ex).Message;
+
+                return RedirectToAction("SanPham");
             }
         }
 
         // GET: Admin/Edit/5
         public ActionResult EditSanPham(int maHang)
         {
+            ViewBag.NhaCungCap = Db.NhaCungCaps.Select(o => new SelectListItem { Value = o.MaSo.ToString(), Text = o.Ten }).ToList();
+            ViewBag.NhomHang = Db.NhomHangs.Select(o => new SelectListItem { Value = o.MaSo.ToString(), Text = o.Ten }).ToList();
             var item = Db.SanPhams.FirstOrDefault(o => o.MaHang == maHang);
 
             if (item == null)
@@ -123,6 +129,8 @@ namespace FoodCleanB.Controllers
         {
             if (!ModelState.IsValid)
             {
+                ViewBag.NhaCungCap = Db.NhaCungCaps.Select(o => new SelectListItem { Value = o.MaSo.ToString(), Text = o.Ten }).ToList();
+                ViewBag.NhomHang = Db.NhomHangs.Select(o => new SelectListItem { Value = o.MaSo.ToString(), Text = o.Ten }).ToList();
                 return View(m);
             }
 
@@ -154,8 +162,9 @@ namespace FoodCleanB.Controllers
             }
             catch (Exception ex)
             {
-                ModelState.AddModelError("Ten", ex.Message);
-                return View(m);
+                TempData["Message"] = (ex.InnerException ?? ex).Message;
+
+                return RedirectToAction("SanPham");
             }
         }
 
