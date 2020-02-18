@@ -62,7 +62,7 @@
         <tr>
             <td>
                 <span>@item.MaHang</span> <br />
-                <a href=" @Url.Action("Detail", "SanPham", new {ItemId = item.MaHang, Title = item.TenHang})">Xem hàng</a>
+                <a href=" @Url.Action("Detail", "SanPham", new {ItemId = item.MaHang, Title = item.TenHang.Replace(" ", "-")})">Xem hàng</a>
             </td>
             <td>
                 @Html.DisplayFor(modelItem => item.Sku)

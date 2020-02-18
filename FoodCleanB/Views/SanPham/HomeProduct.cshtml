@@ -23,7 +23,7 @@ else
                     <div class="mask-icon">
                         <ul>
                             <li>
-                                <a href="@Url.Action("Detail", new {ItemId = item.MaHang, Title = item.TenHang})" data-toggle="tooltip" data-placement="right" title="View">
+                                <a href="@Url.Action("Detail", new {ItemId = item.MaHang, Title = item.TenHang.Replace(" ", "-")})" data-toggle="tooltip" data-placement="right" title="View">
                                     <i class="fas fa-eye"></i>
                                 </a>
                             </li>
