@@ -1,0 +1,13 @@
+﻿@model IQueryable<FoodCleanB.Database.SanPham>
+@{
+    ViewBag.Title = "List";
+    Layout = "~/Views/Shared/LayoutShare.cshtml";
+}
+
+<h2>Sản phẩm của cửa hàng</h2>
+
+<div class="row">
+    @Html.Partial("HomeProduct", Model)
+</div>
+
+

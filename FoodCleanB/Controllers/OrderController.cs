@@ -1,7 +1,8 @@
-﻿using System;
-using FoodCleanB.Database;
+﻿using FoodCleanB.Database;
 using FoodCleanB.Helpers;
 using FoodCleanB.Models;
+using System;
+using System.Collections.Generic;
 using System.Linq;
 using System.Web.Mvc;
 
@@ -19,7 +20,6 @@ namespace FoodCleanB.Controllers
             {
                 ViewBag.CartCount = list.Sum(o => o.SoLuong);
             }
-            
 
             return PartialView("Cart");
         }
@@ -63,14 +63,12 @@ namespace FoodCleanB.Controllers
             {
                 // Luu lai
                 Db.SaveChanges();
-                return Json(new {  Code = 1, Message = "Thêm thành công" }, JsonRequestBehavior.AllowGet);
+                return Json(new { Code = 1, Message = "Thêm thành công" }, JsonRequestBehavior.AllowGet);
             }
             catch (Exception e)
             {
-                return Json(new {  Code = 0, Message = e.Message }, JsonRequestBehavior.AllowGet);
+                return Json(new { Code = 0, Message = e.Message }, JsonRequestBehavior.AllowGet);
             }
-
-            
         }
 
         [Route("gio-hang")]
@@ -102,7 +100,82 @@ namespace FoodCleanB.Controllers
 
         public ActionResult Delete(int id)
         {
-            throw new System.NotImplementedException();
+            TaiKhoan user = (TaiKhoan)Session["User"];
+            var existed = Db.SanPhamGioHangs.FirstOrDefault(o => o.Id == id && o.MaTaiKhoan == user.MaTaiKhoan);
+
+            if (existed != null)
+            {
+                Db.SanPhamGioHangs.Remove(existed);
+                Db.SaveChanges();
+            }
+
+            return RedirectToAction("List");
+        }
+
+        [ValidateAntiForgeryToken]
+        [HttpPost]
+        public ActionResult DatHang()
+        {
+            TaiKhoan user = (TaiKhoan)Session["User"];
+
+            var thongtinShiping = user.ThongTinKhachHangs.Where(o => o.MaTaiKhoan == user.MaTaiKhoan).ToList();
+
+            if (thongtinShiping.Count == 0)
+            {
+                TempData["Message"] = "Thêm địa chỉ nhận hàng";
+                return RedirectToAction("AddShipping", "User");
+            }
+
+            // Tìm sản phẩm trong giỏ
+            var sanPhamGioHangs = Db.SanPhamGioHangs.Where(o => o.MaTaiKhoan == user.MaTaiKhoan).ToList();
+
+            var itemInOrder = new List<ChiTietDonHang>();
+
+            foreach (var sanPhamGioHang in sanPhamGioHangs)
+            {
+                itemInOrder.Add(new ChiTietDonHang
+                {
+                    MaSo = Guid.NewGuid(),
+                    MaHang = sanPhamGioHang.MaHang,
+                    SoLuong = sanPhamGioHang.SoLuong,
+                    ThanhTien = sanPhamGioHang.SanPham.GiaThanh * sanPhamGioHang.SoLuong
+                });
+            }
+
+            // Tạo đơn hàng
+            var daiChiShip = thongtinShiping.First(o => o.MacDinh == true);
+
+            var donHang = new DonHang
+            {
+                MaSo = Guid.NewGuid(),
+                MaTaiKhoan = user.MaTaiKhoan,
+                Ten = daiChiShip.Ten,
+                SDT = daiChiShip.SDT,
+                DiaChi = daiChiShip.DiaChi,
+                NgayLap = DateTimeOffset.Now,
+                TongTien = itemInOrder.Sum(o => o.ThanhTien).GetValueOrDefault(),
+                ChiTietDonHangs = itemInOrder
+            };
+            
+            try
+            {
+                // Lưu
+                Db.DonHangs.Add(donHang);
+                Db.SaveChanges();
+            }
+            catch (Exception e)
+            {
+                TempData["Message"] = e.Message;
+                return RedirectToAction("List");
+            }
+
+            // Xóa sản phẩm trong giỏ hàng sau khi đã đặt hàng
+            Db.SanPhamGioHangs.RemoveRange(sanPhamGioHangs);
+            Db.SaveChanges();
+            // THông báo ở View danh sách đơn hàng
+            TempData["Message"] = "Đặt hàng thành công, chúng tôi sẽ sớm liên hệ với bạn.";
+
+            return RedirectToAction("Order", "User");
         }
     }
 }

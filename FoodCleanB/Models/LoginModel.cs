@@ -29,4 +29,19 @@ namespace FoodCleanB.Models
         [Required]
         public string XacNhanMatKhau { get; set; }
     }
+
+    public class ResetPassModel
+    {
+        [Required]
+        [DisplayName("Mật khẩu hiện tại")]
+        public string MatKhau { get; set; }
+
+        [Required]
+        [DisplayName("Mật khẩu mới")]
+        public string MatKhauMoi { get; set; }
+
+        [Required]
+        [DisplayName("Xác nhận")]
+        public string XacNhanMatKhau { get; set; }
+    }
 }

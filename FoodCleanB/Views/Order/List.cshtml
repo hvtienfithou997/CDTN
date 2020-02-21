@@ -7,6 +7,10 @@
 
 <div class="pt-3 pb-3">
     <h2 class="text-center font-weight-bold">Giỏ hàng</h2>
+    @if (TempData["Message"] != null)
+    {
+        <h3 class="text-center font-weight-bold">@TempData["Message"]</h3>
+    }
 
     @if (!Model.Any())
     {
@@ -27,15 +31,12 @@
                 <th>
                     Ten Hang
                 </th>
-                <th>
+                <th style="text-align: right">
                     @Html.DisplayNameFor(model => model.SoLuong)
                 </th>
-                <th>
+                <th style="text-align: right">
                     @Html.DisplayNameFor(model => model.GiaThanh)
                 </th>
-                @*<th>
-                        @Html.DisplayNameFor(model => model.MaNhaCungCap)
-                    </th>*@
                 <th></th>
             </tr>
 
@@ -50,20 +51,34 @@
                     <td>
                         <a href="@Url.Action("Detail", "SanPham", new { ItemId = item.ItemId, Title = item.TenHang })" title="Xem">@item.TenHang</a>
                     </td>
-                    <td>
+                    <td style="text-align: right">
                         @item.SoLuong
                     </td>
-                    <td>
-                        @item.GiaThanh ₫
+                    <td style="text-align: right">
+                        @item.GiaThanh.ToString("##.###") ₫
                     </td>
-                    @*<td>
-                            @Html.DisplayFor(modelItem => item.MaNhaCungCap)
-                        </td>*@
                     <td>
                         @Html.ActionLink("Xóa", "Delete", new { ItemId = item.ItemId })
                     </td>
                 </tr>
             }
+            <tr>
+                <td></td>
+                <td></td>
+                <td style="text-align: right"><b>Thành tiền:</b></td>
+                <td style="text-align: right">@Model.Sum(o => o.GiaThanh * o.SoLuong).ToString("##.###") đ</td>
+                <td></td>
+            </tr>
         </table>
+
+        using (Html.BeginForm("DatHang", "Order", FormMethod.Post))
+        {
+            @Html.AntiForgeryToken()
+            <div class="row align-content-end">
+                <div class="col-md-12 text-right">
+                    <button class="btn btn-primary" type="submit">Đặt hàng</button>
+                </div>
+            </div>
+        }
     }
 </div>

@@ -35,25 +35,24 @@
     <!-- ALL JS FILES -->
     <script src="~/Scripts/jquery-3.4.1.min.js"></script>
     <script src="~/Scripts/jquery-3.4.1.js"></script>
-    <script src="js/popper.min.js"></script>
-    <script src="js/bootstrap.min.js"></script>
+    <script src="~/js/popper.min.js"></script>
+    <script src="~/js/bootstrap.min.js"></script>
     <!-- ALL PLUGINS -->
-    <script src="js/jquery.superslides.min.js"></script>
-    <script src="js/bootstrap-select.js"></script>
-    <script src="js/inewsticker.js"></script>
-    <script src="js/bootsnav.js."></script>
-    <script src="js/images-loded.min.js"></script>
-    <script src="js/isotope.min.js"></script>
-    <script src="js/owl.carousel.min.js"></script>
-    <script src="js/baguetteBox.min.js"></script>
-    <script src="js/form-validator.min.js"></script>
-    <script src="js/contact-form-script.js"></script>
-    <script src="js/custom.js"></script>
+    <script src="~/js/jquery.superslides.min.js"></script>
+    <script src="~/js/bootstrap-select.js"></script>
+    <script src="~/js/inewsticker.js"></script>
+    <script src="~/js/bootsnav.js"></script>
+    <script src="~/js/images-loded.min.js"></script>
+    <script src="~/js/isotope.min.js"></script>
+    <script src="~/js/owl.carousel.min.js"></script>
+    <script src="~/js/baguetteBox.min.js"></script>
+    <script src="~/js/form-validator.min.js"></script>
+    <script src="~/js/contact-form-script.js"></script>
+    <script src="~/js/custom.js"></script>
 
     <script>
         $(document).on('click', '.add-card', function () {
             var itemId = $(this).data('itemid');
-            
 
             $.ajax({
                     method: 'POST',
@@ -89,7 +88,7 @@
                     <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbar-menu" aria-controls="navbars-rs-food" aria-expanded="false" aria-label="Toggle navigation">
                         <i class="fa fa-bars"></i>
                     </button>
-                    <a class="navbar-brand" href="@Url.Action("Index", "Home")"><img src="images/logo.png" class="logo" alt=""></a>
+                    <a class="navbar-brand" href="@Url.Action("Index", "Home")"><img src="~/images/logo.png" class="logo" alt="" width="100"></a>
                 </div>
                 <!-- End Header Navigation -->
                 <!-- Collect the nav links, forms, and other content for toggling -->
@@ -97,17 +96,10 @@
                     <ul class="nav navbar-nav ml-auto" data-in="fadeInDown" data-out="fadeOutUp">
                         <li class="nav-item active"><a class="nav-link" href="@Url.Action("Index", "Home")">Trang chủ</a></li>
                         @*<li class="nav-item"><a class="nav-link" href="about.html">Về chúng tôi</a></li>*@
-                        <li class="dropdown">
-                            <a href="#" class="nav-link dropdown-toggle arrow" data-toggle="dropdown">Cửa hàng</a>
-                            <ul class="dropdown-menu">
-                                <li><a href="@Url.Action("Insert", "Order")">Tạo đơn hàng</a></li>
-                                <li><a href="cart.html">Cart</a></li>
-                                <li><a href="checkout.html">Checkout</a></li>
-                                <li><a href="my-account.html">My Account</a></li>
-                                <li><a href="wishlist.html">Wishlist</a></li>
-                            </ul>
+                        <li class="nav-item">
+                            <a href="@Url.Action("List", "SanPham")" class="nav-link">Cửa hàng</a>
                         </li>
-                        <li class="nav-item"><a class="nav-link" href="contact-us.html">Liên hệ</a></li>
+                        <li class="nav-item"><a class="nav-link" href="@Url.Action("Contact", "About")">Liên hệ</a></li>
 
                         @if (string.Equals(user?.TenDangNhap, "admin", StringComparison.InvariantCultureIgnoreCase))
                         {
@@ -116,33 +108,42 @@
 
                         @if (user != null)
                         {
-                            <li class="nav-item">
-                                @Html.ActionLink("Chào! "+ user.TenDangNhap, "Profile", "Login", null, new { @class = "nav-link"})
+                            <li class="dropdown">
+                                <a href="#" class="nav-link dropdown-toggle arrow" data-toggle="dropdown">Chào! @user.TenDangNhap</a>
+                                <ul class="dropdown-menu">
+                                    <li>
+                                        <a href="@Url.Action("UserProfile", "User")" class = "nav-link"><i class='fa fa-user'></i> Tài khoản</a>
+                                    </li>
+                                    <li>
+                                        <a href="@Url.Action("Order", "User")" class = "nav-link"><i class='fa fa-people-carry'></i> Đơn hàng</a>
+                                    </li>
+                                    <li class="">
+                                        <a href="@Url.Action("LogOut", "Login")" class = "nav-link"><i class='fa fa-door-open'></i> Đăng xuất</a>
+                                    </li>
+                                </ul>
                             </li>
                         }
-                        
                     </ul>
                 </div>
                 <!-- /.navbar-collapse -->
                 <!-- Start Atribute Navigation -->
                 <div class="attr-nav">
                     <ul>
-                        <li class="search"><a href="#"><i class="fa fa-search"></i></a></li>
+                        <li class="search">
+                            <a href="#">
+                                <i class="fa fa-search"></i>
+                            </a>
+                        </li>
+
                         @if (user != null && user.TenDangNhap != "admin")
                         {
                             @Html.Action("CartCount", "Order")
                         }
-                        
+
                         @if (user == null)
                         {
                             <li class="">
-                                @Html.ActionLink("Dang Nhap", "Login", "Login")
-                            </li>
-                        }
-                        else
-                        {
-                            <li class="">
-                                @Html.ActionLink("Đăng xuất?", "LogOut", "Login")
+                                @Html.ActionLink("Đăng nhập", "Login", "Login")
                             </li>
                         }
                     </ul>
@@ -150,7 +151,6 @@
                 <!-- End Atribute Navigation -->
             </div>
             <!-- Start Side Menu -->
-          
             <!-- End Side Menu -->
         </nav>
         <!-- End Navigation -->

@@ -1,8 +1,7 @@
-﻿using System.Collections.Generic;
-using System.Linq;
+﻿using System.Linq;
 using System.Web.Mvc;
 using FoodCleanB.Database;
-using System.Globalization;
+
 namespace FoodCleanB.Controllers
 {
     public class SanPhamController : BaseController
@@ -29,6 +28,14 @@ namespace FoodCleanB.Controllers
         {
             var sanPham = Db.SanPhams.FirstOrDefault(o => o.MaHang == itemId);
 
+            return View(sanPham);
+        }
+
+        [Route("san-pham")]
+        [HttpGet]
+        public ActionResult List()
+        {
+            var sanPham = Db.SanPhams;
             return View(sanPham);
         }
     }
