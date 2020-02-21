@@ -30,7 +30,7 @@
                         @if (Model.KhuyenMai != null)
                         {
                             <del>@Model.GiaThanh đ</del>
-                            @Html.Raw(Model.GiaThanh - Model.KhuyenMai + "đ")
+                            @Html.Raw((Model.GiaThanh - Model.KhuyenMai) + "đ")
                         }
                         else
                         {

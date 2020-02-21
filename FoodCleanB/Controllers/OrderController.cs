@@ -91,7 +91,7 @@ namespace FoodCleanB.Controllers
                         SoLuong = cart.SoLuong,
                         AnhSanPham = s.AnhSanPham,
                         TenHang = s.TenHang,
-                        GiaThanh = s.GiaThanh,
+                        GiaThanh = s.GiaThanh - (s.KhuyenMai ?? 0),
                         MaNhaCungCap = s.MaNhaCungCap
                     });
 
@@ -138,7 +138,7 @@ namespace FoodCleanB.Controllers
                     MaSo = Guid.NewGuid(),
                     MaHang = sanPhamGioHang.MaHang,
                     SoLuong = sanPhamGioHang.SoLuong,
-                    ThanhTien = sanPhamGioHang.SanPham.GiaThanh * sanPhamGioHang.SoLuong
+                    ThanhTien = (sanPhamGioHang.SanPham.GiaThanh - (sanPhamGioHang.SanPham.KhuyenMai ?? 0)) * sanPhamGioHang.SoLuong
                 });
             }
 
