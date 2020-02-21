@@ -71,7 +71,7 @@ namespace FoodCleanB.Controllers
             }
         }
 
-        [Route("gio-hang")]
+        [Route("gio-hang.html")]
         [HttpGet]
         public ActionResult List()
         {

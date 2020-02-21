@@ -391,6 +391,7 @@
     <Content Include="Views\User\AddShipping.cshtml" />
     <Content Include="Views\User\Shipping.cshtml" />
     <Content Include="Views\User\ChangePassword.cshtml" />
+    <Content Include="Views\About\Contact.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

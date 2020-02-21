@@ -7,7 +7,7 @@ namespace FoodCleanB.Controllers
         [Route("lien-he.html")]
         public ActionResult Contact()
         {
-            throw new System.NotImplementedException();
+            return View();
         }
     }
 }

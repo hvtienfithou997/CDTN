@@ -5,9 +5,9 @@
     Layout = "~/Views/Shared/LayoutShare.cshtml";
 }
 
-<a href="@Url.Action("List","SanPham", new { Id = Model.NhomHang.MaSo, Title = Model.NhomHang.Ten.Replace(" ","-")})">@Model.NhomHang.Ten</a> / @Model.TenHang
-
-
+<div class="nav">
+    <a href="@Url.Action("List","SanPham", new { Id = Model.NhomHang.MaSo, Title = Model.NhomHang.Ten.ToLower().Replace(" ","-")})">@Model.NhomHang.Ten</a> / @Model.TenHang
+</div>
 
 <!-- Start Shop Detail  -->
 <div class="shop-detail-box-main">
@@ -37,23 +37,19 @@
 
                     </h5>
                     <h4>Kho: @Model.SoLuong</h4>
-                        <h4>Mô tả sản phẩm</h4>
+                    <h4>Mô tả sản phẩm</h4>
                     <p>
                         @Model.MoTa
                     </p>
-                    
 
-                    <div class="price-box-bar">
-                        <div class="cart-and-bay-btn">
-                            
-                            <a class="btn hvr-hover add-card" data-itemid="@Model.MaHang" href="#">Thêm vào giỏ</a>
-                        </div>
-                    </div>
-
-                    <div class="add-to-btn">
-                        <div class="add-comp">
-                            <a class="btn hvr-hover" href="#"><i class="fas fa-heart"></i> Add to wishlist</a>
-                            <a class="btn hvr-hover" href="#"><i class="fas fa-sync-alt"></i> Add to Compare</a>
+                    <div class="price-box-bar add-to-btn">
+                        <div class="cart-and-bay-btn mb-2">
+                            <a class="btn hvr-hover add-card" data-itemid="@Model.MaHang" href="#">
+                                <i class="fas fa-cart-plus"></i> Thêm vào giỏ
+                            </a>
+                            <a class="btn hvr-hover" href="#" data-itemid="@Model.MaHang">
+                                <i class="fas fa-heart"></i> Add to wishlist
+                            </a>
                         </div>
                         <div class="share-bar">
                             <a class="btn hvr-hover" href="#"><i class="fab fa-facebook" aria-hidden="true"></i></a>
@@ -64,6 +60,13 @@
                         </div>
                     </div>
                 </div>
+            </div>
+            
+            <div class="col-12">
+                <h4>Chi tiết:</h4>
+                <p>
+                    @Model.MoTa
+                </p>
             </div>
         </div>
 

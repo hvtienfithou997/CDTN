@@ -22,7 +22,7 @@ namespace FoodCleanB.Controllers
             return PartialView(list.ToList());
         }
 
-        [Route("san-pham/{title}-{itemId}")]
+        [Route("san-pham/{title}-{itemId}.html")]
         [HttpGet]
         public ActionResult Detail(int itemId, string title)
         {
@@ -31,16 +31,19 @@ namespace FoodCleanB.Controllers
             return View(sanPham);
         }
         
-        [Route("nhom-hang/{title?}-{id?}")]
+        [Route("nhom-hang/{title?}-{id?}.html")]
         [HttpGet]
         public ActionResult List(int? id = null, string title = null)
         {
-            List<SanPham> lstSanPham;
+            List<SanPham> lstSanPham = new List<SanPham>();
             if (id != null)
             {
-                var getNameCate = Db.NhomHangs.First(x => x.MaSo == id);
-                ViewBag.Category = getNameCate.Ten;
-                lstSanPham = getNameCate.SanPhams.ToList();
+                var getNameCate = Db.NhomHangs.FirstOrDefault(x => x.MaSo == id);
+                if (getNameCate != null)
+                {
+                    ViewBag.Category = getNameCate.Ten;
+                    lstSanPham = getNameCate.SanPhams.ToList();
+                }
             }
             else
             {

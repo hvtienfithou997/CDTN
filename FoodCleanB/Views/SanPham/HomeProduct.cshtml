@@ -16,7 +16,9 @@ else
                     <div class="type-lb">
                         @if (item.KhuyenMai > 0)
                         {
-                            <p class="sale">@item.KhuyenMai đ</p>
+                            <p class="sale">
+                                <del>@item.GiaThanh.ToString("##,###") đ</del>
+                            </p>
                         }
 
                     </div>
@@ -38,9 +40,11 @@ else
                     </div>
                 </div>
                 <div class="why-text">
-                    <h4><a href="@Url.Action("Detail", new {ItemId = item.MaHang, Title = item.TenHang.Replace(" ", "-")})" title="View">@item.TenHang</a></h4>
+                    <h4><a href="@Url.Action("Detail", new {ItemId = item.MaHang, Title = item.TenHang.ToLower().Replace(" ", "-")})" title="View">@item.TenHang</a></h4>
 
-                    <h5 class="price">@String.Format(item.GiaThanh.ToString("##,###")) đ</h5>
+                    <h5 class="price">
+                        @Html.Raw((item.GiaThanh - (item.KhuyenMai ?? 0)).ToString("##,###")) đ
+                    </h5>
                 </div>
             </div>
         </div>
