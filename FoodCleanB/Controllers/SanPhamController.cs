@@ -1,8 +1,7 @@
-﻿using System;
+﻿using FoodCleanB.Database;
 using System.Collections.Generic;
 using System.Linq;
 using System.Web.Mvc;
-using FoodCleanB.Database;
 
 namespace FoodCleanB.Controllers
 {
@@ -13,8 +12,7 @@ namespace FoodCleanB.Controllers
             IQueryable<SanPham> list;
             if (nhomHang != null)
             {
-                 list =  Db.SanPhams.Where(o => o.MaNhomHang == nhomHang);
-
+                list = Db.SanPhams.Where(o => o.MaNhomHang == nhomHang);
             }
             else
             {
@@ -32,25 +30,23 @@ namespace FoodCleanB.Controllers
 
             return View(sanPham);
         }
-
-        [Route("san-pham")]
+        
+        [Route("nhom-hang/{title?}-{id?}")]
         [HttpGet]
-        public ActionResult List(int? id)
+        public ActionResult List(int? id = null, string title = null)
         {
             List<SanPham> lstSanPham;
             if (id != null)
             {
-               
                 var getNameCate = Db.NhomHangs.First(x => x.MaSo == id);
                 ViewBag.Category = getNameCate.Ten;
                 lstSanPham = getNameCate.SanPhams.ToList();
-
             }
             else
             {
                 lstSanPham = Db.SanPhams.ToList();
             }
-            
+
             return View(lstSanPham);
         }
 
@@ -61,7 +57,6 @@ namespace FoodCleanB.Controllers
                 var result = Db.SanPhams.Where(x => x.TenHang.ToLower().Contains(search.ToLower())).ToList();
                 return View("List", result);
             }
-
 
             return RedirectToAction("List");
         }

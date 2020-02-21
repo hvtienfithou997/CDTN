@@ -5,7 +5,7 @@
     Layout = "~/Views/Shared/LayoutShare.cshtml";
 }
 
-<a href="@Url.Action("List","SanPham", new { id = Model.NhomHang.MaSo})">@Model.NhomHang.Ten</a> / @Model.TenHang
+<a href="@Url.Action("List","SanPham", new { Id = Model.NhomHang.MaSo, Title = Model.NhomHang.Ten.Replace(" ","-")})">@Model.NhomHang.Ten</a> / @Model.TenHang
 
 
 
