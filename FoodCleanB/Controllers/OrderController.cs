@@ -101,12 +101,13 @@ namespace FoodCleanB.Controllers
         public ActionResult Delete(int id)
         {
             TaiKhoan user = (TaiKhoan)Session["User"];
-            var existed = Db.SanPhamGioHangs.FirstOrDefault(o => o.Id == id && o.MaTaiKhoan == user.MaTaiKhoan);
+            var existed = Db.SanPhamGioHangs.FirstOrDefault(o => o.MaHang == id && o.MaTaiKhoan == user.MaTaiKhoan);
 
             if (existed != null)
             {
                 Db.SanPhamGioHangs.Remove(existed);
                 Db.SaveChanges();
+                TempData["Message"] = "Xóa sản phẩm thành công!";
             }
 
             return RedirectToAction("List");

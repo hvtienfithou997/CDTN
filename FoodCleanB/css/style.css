@@ -689,7 +689,7 @@
      background: #ffffff;
 }
  .main-header.fixed-menu {
-     position: fixed;
+     /*position: fixed;*/
      visibility: hidden;
      left: 0px;
      top: 0px;
@@ -947,9 +947,15 @@
      font-weight: 700;
      text-transform: uppercase;
 }
- .why-text{
-     background: #f5f5f5;
-     padding: 15px;
+.image-box {
+    height: 160px;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+}
+.why-text {
+    background: #f5f5f5;
+    padding: 15px;
 }
  .why-text h4{
      font-size: 16px;

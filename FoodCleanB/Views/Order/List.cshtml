@@ -58,7 +58,8 @@
                         @item.GiaThanh.ToString("##.###") ₫
                     </td>
                     <td>
-                        @Html.ActionLink("Xóa", "Delete", new { ItemId = item.ItemId })
+                        
+                        <a class="btn-delete" href="@Url.Action("Delete","Order", new {id = item.ItemId})">Xóa sản phẩm</a>
                     </td>
                 </tr>
             }
@@ -82,3 +83,14 @@
         }
     }
 </div>
+<script>
+    $('.btn-delete').on('click', function (event) {
+        event.preventDefault();
+        var x = confirm("Bạn có muốn xóa sản phẩm này không?");
+        if (x) {
+            window.location.href = $(this).attr('href');
+        }
+        
+        
+    })
+</script>
