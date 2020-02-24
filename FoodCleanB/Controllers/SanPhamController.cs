@@ -16,7 +16,7 @@ namespace FoodCleanB.Controllers
             }
             else
             {
-                list = Db.SanPhams.Take(10);
+                list = Db.SanPhams.Take(12);
             }
 
             return PartialView(list.ToList());

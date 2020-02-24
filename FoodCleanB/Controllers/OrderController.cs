@@ -28,10 +28,10 @@ namespace FoodCleanB.Controllers
         [HttpPost]
         public ActionResult Insert(int itemId)
         {
-            var outOfStock = Db.SanPhams.FirstOrDefault(o => o.MaHang == itemId);
+            var tonKho = Db.SanPhams.FirstOrDefault(o => o.MaHang == itemId);
 
             // Het hang
-            if (outOfStock == null || outOfStock.SoLuong == 0)
+            if (tonKho == null || tonKho.SoLuong == 0)
             {
                 return Json(new { Code = 0, Message = "Hết hàng" }, JsonRequestBehavior.AllowGet);
             }
@@ -134,13 +134,22 @@ namespace FoodCleanB.Controllers
 
             foreach (var sanPhamGioHang in sanPhamGioHangs)
             {
-                itemInOrder.Add(new ChiTietDonHang
+                // Kiểm tra số lượng tồn kho đủ để giao hàng
+                var sanPhamKho = Db.SanPhams.FirstOrDefault(o => o.MaHang == sanPhamGioHang.MaHang && o.SoLuong >= sanPhamGioHang.SoLuong);
+
+                // Còn hàng
+                if (sanPhamKho != null)
                 {
-                    MaSo = Guid.NewGuid(),
-                    MaHang = sanPhamGioHang.MaHang,
-                    SoLuong = sanPhamGioHang.SoLuong,
-                    ThanhTien = (sanPhamGioHang.SanPham.GiaThanh - (sanPhamGioHang.SanPham.KhuyenMai ?? 0)) * sanPhamGioHang.SoLuong
-                });
+                    sanPhamKho.SoLuong -= sanPhamGioHang.SoLuong;
+
+                    itemInOrder.Add(new ChiTietDonHang
+                    {
+                        MaSo = Guid.NewGuid(),
+                        MaHang = sanPhamGioHang.MaHang,
+                        SoLuong = sanPhamGioHang.SoLuong,
+                        ThanhTien = (sanPhamGioHang.SanPham.GiaThanh - (sanPhamGioHang.SanPham.KhuyenMai ?? 0)) * sanPhamGioHang.SoLuong
+                    });
+                }
             }
 
             // Tạo đơn hàng
@@ -157,7 +166,7 @@ namespace FoodCleanB.Controllers
                 TongTien = itemInOrder.Sum(o => o.ThanhTien).GetValueOrDefault(),
                 ChiTietDonHangs = itemInOrder
             };
-            
+
             try
             {
                 // Lưu
