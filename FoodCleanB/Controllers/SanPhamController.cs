@@ -31,26 +31,37 @@ namespace FoodCleanB.Controllers
             return View(sanPham);
         }
         
-        [Route("nhom-hang/{title?}-{id?}.html")]
+        [Route("nhom-hang/{title}-{id}-trang-{page}.html")]
         [HttpGet]
-        public ActionResult List(int? id = null, string title = null)
+        public ActionResult List(int page = 1, int id = 0, string title = null)
         {
+            const int pageSize = 12;
+
+            ViewBag.NhomHang = id;
+            ViewBag.NhomHangTen = title;
+            ViewBag.PageSize = pageSize;
+            ViewBag.Page = page;
+
             List<SanPham> lstSanPham = new List<SanPham>();
-            if (id != null)
+            if (id > 0)
             {
                 var getNameCate = Db.NhomHangs.FirstOrDefault(x => x.MaSo == id);
                 if (getNameCate != null)
                 {
                     ViewBag.Category = getNameCate.Ten;
+                    ViewBag.Total = getNameCate.SanPhams.Count();
+                    
                     lstSanPham = getNameCate.SanPhams.ToList();
                 }
             }
             else
             {
+                ViewBag.Total = Db.SanPhams.Count();
                 lstSanPham = Db.SanPhams.ToList();
             }
 
-            return View(lstSanPham);
+            // Phân trang, [pageSize] sản phẩm mỗi trang
+            return View(lstSanPham.Skip(pageSize * (page-1)).Take(pageSize).ToList());
         }
 
         public ActionResult Search(string search)
@@ -58,6 +69,7 @@ namespace FoodCleanB.Controllers
             if (search != null)
             {
                 var result = Db.SanPhams.Where(x => x.TenHang.ToLower().Contains(search.ToLower())).ToList();
+                
                 return View("List", result);
             }
 

@@ -6,7 +6,7 @@
 }
 
 <div class="nav">
-    <a href="@Url.Action("List","SanPham", new { Id = Model.NhomHang.MaSo, Title = Model.NhomHang.Ten.ToLower().Replace(" ","-")})">@Model.NhomHang.Ten</a> / @Model.TenHang
+    <a href="@Url.Action("List","SanPham", new { Page = 1, Id = Model.NhomHang.MaSo, Title = Model.NhomHang.Ten.ToLower().Replace(" ","-")})">@Model.NhomHang.Ten</a> / @Model.TenHang
 </div>
 
 <!-- Start Shop Detail  -->
