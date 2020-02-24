@@ -39,7 +39,7 @@
                     <h4>Kho: @Model.SoLuong</h4>
                     <h4>Mô tả sản phẩm</h4>
                     <p>
-                        @Model.MoTa
+                        @Html.Raw(Model.MoTa)
                     </p>
 
                     <div class="price-box-bar add-to-btn">
@@ -65,7 +65,7 @@
             <div class="col-12">
                 <h4>Chi tiết:</h4>
                 <p>
-                    @Model.MoTa
+                    @Html.Raw(Model.MoTa)
                 </p>
             </div>
         </div>
