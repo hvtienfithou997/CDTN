@@ -38,7 +38,7 @@ namespace FoodCleanB.Controllers
             // Mã hóa mật khẩu
             var hashedPass = EncryptHelper.GenerateSHA256String(log.MatKhau);
 
-            var user = Db.TaiKhoans.FirstOrDefault(x => x.TenDangNhap == log.TenDangNhap && x.MatKhau == hashedPass);
+            TaiKhoan user = Db.TaiKhoans.FirstOrDefault(x => x.TenDangNhap == log.TenDangNhap && x.MatKhau == hashedPass);
 
             if (user != null)
             {

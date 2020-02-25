@@ -96,7 +96,7 @@ namespace FoodCleanB.Controllers
 
             TaiKhoan user = (TaiKhoan)Session["User"];
 
-            if (user.ThongTinKhachHangs.Count == 0)
+            if (!Db.ThongTinKhachHangs.Any(o => o.MaTaiKhoan == user.MaTaiKhoan))
             {
                 m.MacDinh = true;
             }

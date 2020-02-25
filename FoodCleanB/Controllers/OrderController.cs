@@ -119,7 +119,7 @@ namespace FoodCleanB.Controllers
         {
             TaiKhoan user = (TaiKhoan)Session["User"];
 
-            var thongtinShiping = user.ThongTinKhachHangs.Where(o => o.MaTaiKhoan == user.MaTaiKhoan).ToList();
+            var thongtinShiping = Db.ThongTinKhachHangs.Where(o => o.MaTaiKhoan == user.MaTaiKhoan).ToList();
 
             if (thongtinShiping.Count == 0)
             {
