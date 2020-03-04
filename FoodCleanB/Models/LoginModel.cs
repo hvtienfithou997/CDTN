@@ -28,6 +28,9 @@ namespace FoodCleanB.Models
 
         [Required]
         public string XacNhanMatKhau { get; set; }
+
+        [Required]
+        public string CaptchaResponse { get; set; }
     }
 
     public class ResetPassModel

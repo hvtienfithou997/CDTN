@@ -81,7 +81,14 @@ namespace FoodCleanB.Controllers
             {
                 return View(m);
             }
-
+            // Check Captcha
+            ReCaptchaModel captcha = new ReCaptchaModel();
+            captcha.Validate(m.CaptchaResponse);
+            if (!string.Equals(captcha.Success, "true", StringComparison.OrdinalIgnoreCase))
+            {
+                ModelState.AddModelError("CaptchaResponse", "Yêu cầu xác thực!");
+                return View(m);
+            }
             // Mật khẩu không trùng nhau
             if (m.MatKhau != m.XacNhanMatKhau)
             {
@@ -109,7 +116,6 @@ namespace FoodCleanB.Controllers
 
             // Mã hóa mật khẩu trước khi lưu
             var hashedPass = EncryptHelper.GenerateSHA256String(m.MatKhau);
-
 
             var newUser = new TaiKhoan { MaTaiKhoan = Guid.NewGuid(), MatKhau = hashedPass, TenDangNhap = m.TenDangNhap, Email = m.Email };
             Db.TaiKhoans.Add(newUser);
