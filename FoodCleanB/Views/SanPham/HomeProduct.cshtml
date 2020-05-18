@@ -40,7 +40,7 @@ else
                     </div>
                 </div>
                 <div class="why-text">
-                    <h4><a href="@Url.Action("Detail", new {ItemId = item.MaHang, Title = item.TenHang.ToLower().Replace(" ", "-")})" title="View">@item.TenHang</a></h4>
+                    <h4><a href="@Url.Action("Detail","SanPham", new {ItemId = item.MaHang, Title = item.TenHang.ToLower().Replace(" ", "-")})" title="View">@item.TenHang</a></h4>
 
                     <h5 class="price">
                         @Html.Raw((item.GiaThanh - (item.KhuyenMai ?? 0)).ToString("##,###")) đ

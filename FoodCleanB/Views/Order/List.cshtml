@@ -44,7 +44,7 @@
             {
                 <tr>
                     <td>
-                        <a class="image-box" href="@Url.Action("Detail", "SanPham", new {ItemId = item.ItemId})" title="Xem">
+                        <a class="image-box" href="@Url.Action("Detail", "SanPham", new {ItemId = item.ItemId, Title = item.TenHang})" title="Xem">
                             <img src="@item.AnhSanPham" alt="@item.TenHang" style="max-width: 150px; height: auto;" />
                         </a>
                     </td>

@@ -7,9 +7,9 @@
 
 <h2>SanPham</h2>
 
-<p>
-    @Html.ActionLink("Thêm mới", "ThemSanPham")
-</p>
+
+    @Html.ActionLink("Thêm mới", "ThemSanPham",null, new { @type="button",@class="btn btn-info"})
+
 
 @if (TempData["Message"] != null)
 {
@@ -36,11 +36,9 @@
         <th>
             @Html.DisplayNameFor(model => model.SoLuong)
         </th>
+       
         <th>
             @Html.DisplayNameFor(model => model.KhoiLuong)
-        </th>
-        <th>
-            @Html.DisplayNameFor(model => model.TheTich)
         </th>
         <th>
             @Html.DisplayNameFor(model => model.KhuyenMai)
@@ -62,7 +60,7 @@
         <tr>
             <td>
                 <span>@item.MaHang</span> <br />
-                <a href=" @Url.Action("Detail", "SanPham", new {ItemId = item.MaHang, Title = item.TenHang.Replace(" ", "-")})">Xem hàng</a>
+                <a href=" @Url.Action("Detail", "SanPham", new { ItemId = item.MaHang, Title = item.TenHang.Replace(" ", "-") })">Xem hàng</a>
             </td>
             <td>
                 @Html.DisplayFor(modelItem => item.Sku)
@@ -88,9 +86,7 @@
                 
 
             </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.TheTich)
-            </td>
+           
             <td>
                 @(item.KhuyenMai != null ? item.KhuyenMai.GetValueOrDefault().ToString("##,###") : "0") đ
             </td>
@@ -104,8 +100,8 @@
                 @Html.DisplayFor(modelItem => item.NhomHang.Ten)
             </td>
             <td>
-                <a href="@Url.Action("EditSanPham", "Admin", new { MaHang = item.MaHang})" target="_blank">Sửa</a> |
-                @Html.ActionLink("Xóa", "DeleteSanPham", new { MaHang = item.MaHang })
+                <a type="button" class="btn btn-warning" href="@Url.Action("EditSanPham", "Admin", new { MaHang = item.MaHang })" target="_blank">Sửa</a>
+                @Html.ActionLink("Xóa", "DeleteSanPham", new { MaHang = item.MaHang }, new {@class = "btn btn-danger", @type = "button" })
             </td>
         </tr>
     }

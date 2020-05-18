@@ -19,9 +19,9 @@ namespace FoodCleanB.Helpers
 
                 if (user == null)
                 {
-                    var db = new CDLTEntities1();
+                    var db = new CDLTEntities();
 
-                    user = db.TaiKhoans.FirstOrDefault(x => x.MaTaiKhoan.ToString() == maTaiKhoanTrongCookie);
+                    user = db.TaiKhoan.FirstOrDefault(x => x.MaTaiKhoan.ToString() == maTaiKhoanTrongCookie);
 
                     if (user != null)
                     {

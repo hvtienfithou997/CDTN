@@ -8,27 +8,34 @@
 <h2>Đơn hàng</h2>
 
 @if (Model != null)
-{
+{   
     foreach (var item in Model)
-    {
-        <div class="order">
+    {        <div class="order">
             <p>Mã đơn hàng: @item.MaSo</p>
             <div>
                Ngày mua: @item.NgayLap.Value.ToString("dd/MM/yyyy HH:mm:ss")
             </div>
             <div class="item-order ">
-                @foreach (var itemOrder in item.ChiTietDonHangs)
+
+
+                @foreach (var itemOrder in item.ChiTietDonHang)
                 {
-                    <div class="">
-                        <div class=""> <img class="img-responsive img-thumbnail" src="@itemOrder.SanPham.AnhSanPham" width="150px"/></div>
+                    if (item.SanPham != null)
+                    {
                         <div class="">
-                            Tên hàng: @itemOrder.SanPham.TenHang
+                            <div class=""> <img class="img-responsive img-thumbnail" src="@itemOrder.SanPham.AnhSanPham" width="150px" /></div>
+                            <div class="">
+                                Tên hàng: @itemOrder.SanPham.TenHang
+                            </div>
+                            <div class="">
+                                Số lượng: @itemOrder.SoLuong
+                            </div>
                         </div>
-                        <div class="">
-                            Số lượng: @itemOrder.SoLuong
-                        </div>
-                    </div>
+                    }
+
                 }
+
+
             </div>
             <div class="shipping-info">
                 <div class="ship-adderss">
