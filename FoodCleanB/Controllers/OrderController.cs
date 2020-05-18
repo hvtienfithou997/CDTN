@@ -15,7 +15,7 @@ namespace FoodCleanB.Controllers
         public PartialViewResult CartCount()
         {
             TaiKhoan user = (TaiKhoan)Session["User"];
-            var list = Db.SanPhamGioHangs.Where(a => a.MaTaiKhoan == user.MaTaiKhoan);
+            var list = Db.SanPhamGioHang.Where(a => a.MaTaiKhoan == user.MaTaiKhoan);
             if (list.Any())
             {
                 ViewBag.CartCount = list.Sum(o => o.SoLuong);
@@ -28,7 +28,7 @@ namespace FoodCleanB.Controllers
         [HttpPost]
         public ActionResult Insert(int itemId)
         {
-            var tonKho = Db.SanPhams.FirstOrDefault(o => o.MaHang == itemId);
+            var tonKho = Db.SanPham.FirstOrDefault(o => o.MaHang == itemId);
 
             // Het hang
             if (tonKho == null || tonKho.SoLuong == 0)
@@ -39,7 +39,7 @@ namespace FoodCleanB.Controllers
             TaiKhoan user = (TaiKhoan)Session["User"];
 
             // Sản phẩm đã có trong giỏ hàng
-            var existed = Db.SanPhamGioHangs.SingleOrDefault(b => b.MaTaiKhoan == user.MaTaiKhoan && b.MaHang == itemId);
+            var existed = Db.SanPhamGioHang.SingleOrDefault(b => b.MaTaiKhoan == user.MaTaiKhoan && b.MaHang == itemId);
 
             // Tăng số lượng của sản phẩm đã có
             if (existed != null)
@@ -56,7 +56,7 @@ namespace FoodCleanB.Controllers
                     SoLuong = 1
                 };
 
-                Db.SanPhamGioHangs.Add(newItem);
+                Db.SanPhamGioHang.Add(newItem);
             }
 
             try
@@ -81,8 +81,8 @@ namespace FoodCleanB.Controllers
 
             // Lay danh sach item  da co gio hang trong session
             // Join voi bang Hang de lay ten sản phẩm
-            var danhSachGioHang = Db.SanPhamGioHangs.Where(b => b.MaTaiKhoan == user.MaTaiKhoan)
-                .Join(Db.SanPhams,
+            var danhSachGioHang = Db.SanPhamGioHang.Where(b => b.MaTaiKhoan == user.MaTaiKhoan)
+                .Join(Db.SanPham,
                     cart => cart.MaHang,
                     s => s.MaHang,
                     (cart, s) => new UserCartItemModel
@@ -101,11 +101,11 @@ namespace FoodCleanB.Controllers
         public ActionResult Delete(int id)
         {
             TaiKhoan user = (TaiKhoan)Session["User"];
-            var existed = Db.SanPhamGioHangs.FirstOrDefault(o => o.MaHang == id && o.MaTaiKhoan == user.MaTaiKhoan);
+            var existed = Db.SanPhamGioHang.FirstOrDefault(o => o.MaHang == id && o.MaTaiKhoan == user.MaTaiKhoan);
 
             if (existed != null)
             {
-                Db.SanPhamGioHangs.Remove(existed);
+                Db.SanPhamGioHang.Remove(existed);
                 Db.SaveChanges();
                 TempData["Message"] = "Xóa sản phẩm thành công!";
             }
@@ -119,7 +119,7 @@ namespace FoodCleanB.Controllers
         {
             TaiKhoan user = (TaiKhoan)Session["User"];
 
-            var thongtinShiping = Db.ThongTinKhachHangs.Where(o => o.MaTaiKhoan == user.MaTaiKhoan).ToList();
+            var thongtinShiping = Db.ThongTinKhachHang.Where(o => o.MaTaiKhoan == user.MaTaiKhoan).ToList();
 
             if (thongtinShiping.Count == 0)
             {
@@ -128,14 +128,14 @@ namespace FoodCleanB.Controllers
             }
 
             // Tìm sản phẩm trong giỏ
-            var sanPhamGioHangs = Db.SanPhamGioHangs.Where(o => o.MaTaiKhoan == user.MaTaiKhoan).ToList();
+            var SanPhamGioHang = Db.SanPhamGioHang.Where(o => o.MaTaiKhoan == user.MaTaiKhoan).ToList();
 
             var itemInOrder = new List<ChiTietDonHang>();
 
-            foreach (var sanPhamGioHang in sanPhamGioHangs)
+            foreach (var sanPhamGioHang in SanPhamGioHang)
             {
                 // Kiểm tra số lượng tồn kho đủ để giao hàng
-                var sanPhamKho = Db.SanPhams.FirstOrDefault(o => o.MaHang == sanPhamGioHang.MaHang && o.SoLuong >= sanPhamGioHang.SoLuong);
+                var sanPhamKho = Db.SanPham.FirstOrDefault(o => o.MaHang == sanPhamGioHang.MaHang && o.SoLuong >= sanPhamGioHang.SoLuong);
 
                 // Còn hàng
                 if (sanPhamKho != null)
@@ -164,13 +164,13 @@ namespace FoodCleanB.Controllers
                 DiaChi = daiChiShip.DiaChi,
                 NgayLap = DateTimeOffset.Now,
                 TongTien = itemInOrder.Sum(o => o.ThanhTien).GetValueOrDefault(),
-                ChiTietDonHangs = itemInOrder
+                ChiTietDonHang = itemInOrder
             };
 
             try
             {
                 // Lưu
-                Db.DonHangs.Add(donHang);
+                Db.DonHang.Add(donHang);
                 Db.SaveChanges();
             }
             catch (Exception e)
@@ -180,7 +180,7 @@ namespace FoodCleanB.Controllers
             }
 
             // Xóa sản phẩm trong giỏ hàng sau khi đã đặt hàng
-            Db.SanPhamGioHangs.RemoveRange(sanPhamGioHangs);
+            Db.SanPhamGioHang.RemoveRange(SanPhamGioHang);
             Db.SaveChanges();
             // THông báo ở View danh sách đơn hàng
             TempData["Message"] = "Đặt hàng thành công, chúng tôi sẽ sớm liên hệ với bạn.";

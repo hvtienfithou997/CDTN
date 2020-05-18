@@ -21,7 +21,7 @@ namespace FoodCleanB.Controllers
         [HttpGet]
         public ActionResult NhomHang()
         {
-            var nhoms = Db.NhomHangs.ToList();
+            var nhoms = Db.NhomHang.ToList();
             return View(nhoms);
         }
 
@@ -41,13 +41,13 @@ namespace FoodCleanB.Controllers
                 return View(m);
             }
 
-            if (Db.NhomHangs.Any(o => o.Ten == m.Ten))
+            if (Db.NhomHang.Any(o => o.Ten == m.Ten))
             {
                 ModelState.AddModelError("Ten", "Nhóm này đã tồn tại.");
                 return View(m);
             }
 
-            Db.NhomHangs.Add(m);
+            Db.NhomHang.Add(m);
             Db.SaveChanges();
             TempData["Message"] = $"Thêm thành công {m.Ten}";
 
@@ -61,15 +61,15 @@ namespace FoodCleanB.Controllers
         [HttpGet]
         public ActionResult SanPham()
         {
-            var list = Db.SanPhams.ToList();
+            var list = Db.SanPham.OrderByDescending( x => x.MaHang).ToList();
             return View(list);
         }
 
         [HttpGet]
         public ActionResult ThemSanPham()
         {
-            ViewBag.NhaCungCap = Db.NhaCungCaps.Select(o => new SelectListItem { Value = o.MaSo.ToString(), Text = o.Ten }).ToList();
-            ViewBag.NhomHang = Db.NhomHangs.Select(o => new SelectListItem { Value = o.MaSo.ToString(), Text = o.Ten }).ToList();
+            ViewBag.NhaCungCap = Db.NhaCungCap.Select(o => new SelectListItem { Value = o.MaSo.ToString(), Text = o.Ten }).ToList();
+            ViewBag.NhomHang = Db.NhomHang.Select(o => new SelectListItem { Value = o.MaSo.ToString(), Text = o.Ten }).ToList();
 
             return View();
         }
@@ -86,8 +86,8 @@ namespace FoodCleanB.Controllers
 
             if (m == null || !ModelState.IsValid)
             {
-                ViewBag.NhaCungCap = Db.NhaCungCaps.Select(o => new SelectListItem { Value = o.MaSo.ToString(), Text = o.Ten }).ToList();
-                ViewBag.NhomHang = Db.NhomHangs.Select(o => new SelectListItem { Value = o.MaSo.ToString(), Text = o.Ten }).ToList();
+                ViewBag.NhaCungCap = Db.NhaCungCap.Select(o => new SelectListItem { Value = o.MaSo.ToString(), Text = o.Ten }).ToList();
+                ViewBag.NhomHang = Db.NhomHang.Select(o => new SelectListItem { Value = o.MaSo.ToString(), Text = o.Ten }).ToList();
 
                 return View(m);
             }
@@ -97,7 +97,7 @@ namespace FoodCleanB.Controllers
                 m.Sku = Guid.NewGuid();
                 m.TenHang = m.TenHang?.Trim();
 
-                Db.SanPhams.Add(m);
+                Db.SanPham.Add(m);
                 Db.SaveChanges();
 
                 TempData["Message"] = $"Thêm thành công {m.MaHang}";
@@ -111,13 +111,13 @@ namespace FoodCleanB.Controllers
                 return RedirectToAction("SanPham");
             }
         }
-
+		[HttpGet]
         // GET: Admin/Edit/5
         public ActionResult EditSanPham(int maHang)
         {
-            ViewBag.NhaCungCap = Db.NhaCungCaps.Select(o => new SelectListItem { Value = o.MaSo.ToString(), Text = o.Ten }).ToList();
-            ViewBag.NhomHang = Db.NhomHangs.Select(o => new SelectListItem { Value = o.MaSo.ToString(), Text = o.Ten }).ToList();
-            var item = Db.SanPhams.FirstOrDefault(o => o.MaHang == maHang);
+            ViewBag.NhaCungCap = Db.NhaCungCap.Select(o => new SelectListItem { Value = o.MaSo.ToString(), Text = o.Ten }).ToList();
+            ViewBag.NhomHang = Db.NhomHang.Select(o => new SelectListItem { Value = o.MaSo.ToString(), Text = o.Ten }).ToList();
+            var item = Db.SanPham.FirstOrDefault(o => o.MaHang == maHang);
 
             if (item == null)
             {
@@ -129,8 +129,8 @@ namespace FoodCleanB.Controllers
             return View(item);
         }
 
-        [HttpPost]
-        [ValidateAntiForgeryToken]
+        [HttpPost, ValidateInput(false)]
+        
         public ActionResult EditSanPham(SanPham m)
         {
             if (m?.TenHang == null || m.TenHang.Trim().Length == 0)
@@ -140,15 +140,15 @@ namespace FoodCleanB.Controllers
 
             if (m == null || !ModelState.IsValid)
             {
-                ViewBag.NhaCungCap = Db.NhaCungCaps.Select(o => new SelectListItem { Value = o.MaSo.ToString(), Text = o.Ten }).ToList();
-                ViewBag.NhomHang = Db.NhomHangs.Select(o => new SelectListItem { Value = o.MaSo.ToString(), Text = o.Ten }).ToList();
+                ViewBag.NhaCungCap = Db.NhaCungCap.Select(o => new SelectListItem { Value = o.MaSo.ToString(), Text = o.Ten }).ToList();
+                ViewBag.NhomHang = Db.NhomHang.Select(o => new SelectListItem { Value = o.MaSo.ToString(), Text = o.Ten }).ToList();
                 return View(m);
             }
 
             try
             {
                 // Tìm sản phẩm
-                SanPham existed = Db.SanPhams.FirstOrDefault(o => o.MaHang == m.MaHang);
+                SanPham existed = Db.SanPham.FirstOrDefault(o => o.MaHang == m.MaHang);
                 if (existed == null)
                 {
                     TempData["Message"] = $"Không có sản phẩm với mã số {m.MaHang}";
@@ -184,7 +184,7 @@ namespace FoodCleanB.Controllers
         public ActionResult DeleteSanPham(int maHang)
         {
             // Tìm sản phẩm
-            SanPham existed = Db.SanPhams.FirstOrDefault(o => o.MaHang == maHang);
+            SanPham existed = Db.SanPham.FirstOrDefault(o => o.MaHang == maHang);
 
             if (existed == null)
             {
@@ -193,12 +193,12 @@ namespace FoodCleanB.Controllers
                 return RedirectToAction("SanPham");
             }
 
-            var card = Db.SanPhamGioHangs.Where(o => o.MaHang == existed.MaHang);
+            var card = Db.SanPhamGioHang.Where(o => o.MaHang == existed.MaHang);
             foreach (var sp in card)
             {
-                Db.SanPhamGioHangs.Remove(sp);
+                Db.SanPhamGioHang.Remove(sp);
             }
-            Db.SanPhams.Remove(existed);
+            Db.SanPham.Remove(existed);
             Db.SaveChanges();
 
             TempData["Message"] = $"Đã xóa mã số {maHang}";
@@ -211,7 +211,7 @@ namespace FoodCleanB.Controllers
         [HttpGet]
         public ActionResult NhaCungCap()
         {
-            var nhaCungCap = Db.NhaCungCaps.ToList();
+            var nhaCungCap = Db.NhaCungCap.ToList();
             return View(nhaCungCap);
         }
 
@@ -232,7 +232,7 @@ namespace FoodCleanB.Controllers
 
             m.MaSo = Guid.NewGuid();
 
-            Db.NhaCungCaps.Add(m);
+            Db.NhaCungCap.Add(m);
             Db.SaveChanges();
 
             TempData["Message"] = $"Thêm thành công {m.Ten}";

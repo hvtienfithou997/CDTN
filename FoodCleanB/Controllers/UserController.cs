@@ -16,7 +16,9 @@ namespace FoodCleanB.Controllers
         [HttpGet]
         public ActionResult UserProfile()
         {
-            return View();
+			TaiKhoan user = (TaiKhoan)Session["User"];
+			ViewBag.User = user;
+			return View(user);
         }
 
         [HttpGet]
@@ -44,7 +46,7 @@ namespace FoodCleanB.Controllers
 
             TaiKhoan user = (TaiKhoan)Session["User"];
 
-            var existed = Db.TaiKhoans.FirstOrDefault(o => o.MaTaiKhoan == user.MaTaiKhoan);
+            var existed = Db.TaiKhoan.FirstOrDefault(o => o.MaTaiKhoan == user.MaTaiKhoan);
 
             if (existed == null)
             {
@@ -72,7 +74,7 @@ namespace FoodCleanB.Controllers
         {
             TaiKhoan user = (TaiKhoan)Session["User"];
 
-            var listDaiChi = Db.ThongTinKhachHangs.Where(o => o.MaTaiKhoan == user.MaTaiKhoan);
+            var listDaiChi = Db.ThongTinKhachHang.Where(o => o.MaTaiKhoan == user.MaTaiKhoan);
 
             return View(listDaiChi);
         }
@@ -96,7 +98,7 @@ namespace FoodCleanB.Controllers
 
             TaiKhoan user = (TaiKhoan)Session["User"];
 
-            if (!Db.ThongTinKhachHangs.Any(o => o.MaTaiKhoan == user.MaTaiKhoan))
+            if (!Db.ThongTinKhachHang.Any(o => o.MaTaiKhoan == user.MaTaiKhoan))
             {
                 m.MacDinh = true;
             }
@@ -104,7 +106,7 @@ namespace FoodCleanB.Controllers
             m.MaSo = Guid.NewGuid();
             m.MaTaiKhoan = user.MaTaiKhoan;
 
-            Db.ThongTinKhachHangs.Add(m);
+            Db.ThongTinKhachHang.Add(m);
             Db.SaveChanges();
 
             TempData["Message"] = "Thêm địa chỉ thành công.";
@@ -118,7 +120,7 @@ namespace FoodCleanB.Controllers
         {
             TaiKhoan user = (TaiKhoan)Session["User"];
 
-            var mShip = Db.ThongTinKhachHangs.Where(o => o.MaTaiKhoan == user.MaTaiKhoan);
+            var mShip = Db.ThongTinKhachHang.Where(o => o.MaTaiKhoan == user.MaTaiKhoan);
 
             if (mShip.Any())
             {
@@ -136,11 +138,11 @@ namespace FoodCleanB.Controllers
         public ActionResult DeleteShipping(Guid id)
         {
             TaiKhoan user = (TaiKhoan)Session["User"];
-            var mShip = Db.ThongTinKhachHangs.FirstOrDefault(o => o.MaTaiKhoan == user.MaTaiKhoan && o.MaSo == id);
+            var mShip = Db.ThongTinKhachHang.FirstOrDefault(o => o.MaTaiKhoan == user.MaTaiKhoan && o.MaSo == id);
 
             if (mShip != null)
             {
-                Db.ThongTinKhachHangs.Remove(mShip);
+                Db.ThongTinKhachHang.Remove(mShip);
                 Db.SaveChanges();
 
                 TempData["Message"] = "Đã xóa địa chỉ.";
@@ -154,7 +156,7 @@ namespace FoodCleanB.Controllers
         public ActionResult Order()
         {
             TaiKhoan user = (TaiKhoan)Session["User"];
-            var orders = Db.DonHangs.Where(o => o.MaTaiKhoan == user.MaTaiKhoan);
+            var orders = Db.DonHang.Where(o => o.MaTaiKhoan == user.MaTaiKhoan);
             return View(orders);
         }
 
@@ -162,7 +164,7 @@ namespace FoodCleanB.Controllers
         [Route("san-pham-ua-thich")]
         public ActionResult WishList()
         {
-            throw new System.NotImplementedException();
+			return View();
         }
     }
 }

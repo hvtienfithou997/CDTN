@@ -38,7 +38,7 @@ namespace FoodCleanB.Controllers
             // Mã hóa mật khẩu
             var hashedPass = EncryptHelper.GenerateSHA256String(log.MatKhau);
 
-            TaiKhoan user = Db.TaiKhoans.FirstOrDefault(x => x.TenDangNhap == log.TenDangNhap && x.MatKhau == hashedPass);
+            TaiKhoan user = Db.TaiKhoan.FirstOrDefault(x => x.TenDangNhap == log.TenDangNhap && x.MatKhau == hashedPass);
 
             if (user != null)
             {
@@ -96,7 +96,7 @@ namespace FoodCleanB.Controllers
                 return View(m);
             }
 
-            var user = Db.TaiKhoans.FirstOrDefault(x => x.TenDangNhap == m.TenDangNhap);
+            var user = Db.TaiKhoan.FirstOrDefault(x => x.TenDangNhap == m.TenDangNhap);
 
             // Tên đăng nhập đã được dùng
             if (user != null)
@@ -105,7 +105,7 @@ namespace FoodCleanB.Controllers
                 return View(m);
             }
 
-            user = Db.TaiKhoans.FirstOrDefault(x => x.Email == m.Email);
+            user = Db.TaiKhoan.FirstOrDefault(x => x.Email == m.Email);
 
             // Email đã được dùng
             if (user != null)
@@ -118,7 +118,7 @@ namespace FoodCleanB.Controllers
             var hashedPass = EncryptHelper.GenerateSHA256String(m.MatKhau);
 
             var newUser = new TaiKhoan { MaTaiKhoan = Guid.NewGuid(), MatKhau = hashedPass, TenDangNhap = m.TenDangNhap, Email = m.Email };
-            Db.TaiKhoans.Add(newUser);
+            Db.TaiKhoan.Add(newUser);
             Db.SaveChanges();
 
             return RedirectToAction("Login");

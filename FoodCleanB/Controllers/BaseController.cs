@@ -7,6 +7,6 @@ namespace FoodCleanB.Controllers
     [GetSession]
     public class BaseController : Controller
     {
-        protected readonly CDLTEntities1 Db = new CDLTEntities1();
+        protected readonly CDLTEntities Db = new CDLTEntities();
     }
 }

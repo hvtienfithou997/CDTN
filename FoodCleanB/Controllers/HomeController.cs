@@ -7,7 +7,7 @@ namespace FoodCleanB.Controllers
     {
         public ActionResult Index()
         {
-            ViewBag.NhomHang = Db.NhomHangs.ToList();
+            ViewBag.NhomHang = Db.NhomHang.ToList();
 
             return View();
         }

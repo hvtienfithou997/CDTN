@@ -12,11 +12,11 @@ namespace FoodCleanB.Controllers
             IQueryable<SanPham> list;
             if (nhomHang != null)
             {
-                list = Db.SanPhams.Where(o => o.MaNhomHang == nhomHang);
+                list = Db.SanPham.Where(o => o.MaNhomHang == nhomHang);
             }
             else
             {
-                list = Db.SanPhams.Take(12);
+                list = Db.SanPham.Take(12);
             }
 
             return PartialView(list.ToList());
@@ -24,9 +24,9 @@ namespace FoodCleanB.Controllers
 
         [Route("san-pham/{title}-{itemId}.html")]
         [HttpGet]
-        public ActionResult Detail(int itemId, string title)
+        public ActionResult Detail(int ItemId, string title)
         {
-            var sanPham = Db.SanPhams.FirstOrDefault(o => o.MaHang == itemId);
+            var sanPham = Db.SanPham.FirstOrDefault(o => o.MaHang == ItemId);
 
             return View(sanPham);
         }
@@ -45,19 +45,19 @@ namespace FoodCleanB.Controllers
             List<SanPham> lstSanPham = new List<SanPham>();
             if (id > 0)
             {
-                var getNameCate = Db.NhomHangs.FirstOrDefault(x => x.MaSo == id);
+                var getNameCate = Db.NhomHang.FirstOrDefault(x => x.MaSo == id);
                 if (getNameCate != null)
                 {
                     ViewBag.Category = getNameCate.Ten;
-                    ViewBag.Total = getNameCate.SanPhams.Count();
+                    ViewBag.Total = getNameCate.SanPham.Count();
                     
-                    lstSanPham = getNameCate.SanPhams.ToList();
+                    lstSanPham = getNameCate.SanPham.ToList();
                 }
             }
             else
             {
-                ViewBag.Total = Db.SanPhams.Count();
-                lstSanPham = Db.SanPhams.ToList();
+                ViewBag.Total = Db.SanPham.Count();
+                lstSanPham = Db.SanPham.ToList();
             }
 
             // Phân trang, [pageSize] sản phẩm mỗi trang
@@ -68,7 +68,7 @@ namespace FoodCleanB.Controllers
         {
             if (search != null)
             {
-                var result = Db.SanPhams.Where(x => x.TenHang.ToLower().Contains(search.ToLower())).ToList();
+                var result = Db.SanPham.Where(x => x.TenHang.ToLower().Contains(search.ToLower())).ToList();
                 
                 return View("List", result);
             }
